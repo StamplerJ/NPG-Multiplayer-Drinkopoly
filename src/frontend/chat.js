@@ -5,8 +5,7 @@ $(document).ready(function() {
     websocket.onopen = function(ev) {
         let obj = {
             "type": "login",
-            "color": color,
-            "nickname": user
+            "nickname": "user"
         };
         websocket.send(JSON.stringify(obj));
     };
