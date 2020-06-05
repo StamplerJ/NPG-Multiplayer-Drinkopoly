@@ -1,5 +1,5 @@
 <?php
-class chat
+class Chat
 {
     private $username;
     private $message;

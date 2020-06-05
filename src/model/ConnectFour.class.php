@@ -1,5 +1,5 @@
 <?php
-class connectFour extends TwoPlayerGames
+class ConnectFour extends TwoPlayerGames
 {
     public function __construct($value)
     {

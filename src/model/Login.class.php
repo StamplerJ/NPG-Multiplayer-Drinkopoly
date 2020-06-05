@@ -1,12 +1,11 @@
 <?php
-class login
+class Login
 {
     private $successful;
     private $username;
     private $message;
 
-
-    private function __construct($value)
+    public function __construct($value)
     {
         $this->successful = $value->successful;
         $this->username = $value->username;

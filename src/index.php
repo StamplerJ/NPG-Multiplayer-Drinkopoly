@@ -20,7 +20,16 @@
 
 <h1 class="text-center">Drinkopoly</h1>
 
-<div class="mx-5">
+<div id="login">
+    <h2>Join Drinkopoly</h2>
+    <div>
+        Username:
+        <input id="username" type="text"/>
+        <input id="loginButton" type="button" value="Login">
+    </div>
+</div>
+
+<div id="game" class="d-none mx-5">
     <div class="row">
         <div id="board" class="col-8 text-center">
             <canvas id="canvas" class="border mx-auto" width="800" height="800">
@@ -51,7 +60,18 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#loginButton").click(function() {
+            let username = $("#username").val();
 
+            if (username === "") {
+                return;
+            }
+
+            $("#login").addClass("d-none");
+            $("#game").removeClass("d-none");
+
+            login(username);
+        });
     });
 </script>
 

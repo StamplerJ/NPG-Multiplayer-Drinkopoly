@@ -1,5 +1,5 @@
 <?php
-class category extends Games
+class Category extends Games
 {
     private $correctAnswer;
     private $amount;

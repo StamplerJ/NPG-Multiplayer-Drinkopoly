@@ -1,5 +1,5 @@
 <?php
-class boardTurn
+class BoardTurn
 {
     private $username;
     private $turn;

@@ -1,5 +1,5 @@
 <?php
-class shotAndDrink
+class ShotAndDrink
 {
     //TODO parent class to distribute drinks
     private $amount;

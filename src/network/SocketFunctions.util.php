@@ -44,10 +44,10 @@ function mask($text)
 }
 
 //handshake new client.
-function perform_handshaking($receved_header, $client_conn, $host, $port)
+function perform_handshaking($received_header, $client_conn, $host, $port)
 {
     $headers = array();
-    $lines = preg_split("/\r\n/", $receved_header);
+    $lines = preg_split("/\r\n/", $received_header);
     foreach ($lines as $line)
     {
         $line = chop($line);

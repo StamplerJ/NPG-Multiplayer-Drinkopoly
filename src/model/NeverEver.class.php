@@ -1,5 +1,5 @@
 <?php
-class neverEver extends Games
+class NeverEver extends Games
 {
     private $answer;
 
