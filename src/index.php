@@ -53,6 +53,10 @@
                 <div id="message_box">
                 </div>
             </div>
+            <input id="message" type="text" width="100%"/>
+            <input id="sendMessage" type="button" value="Send"/>
+            <input id="voteYes" type="button" value=" + " display="none"/>
+            <input id="voteNo" type="button" value=" - " visibility="hidden"/>
         </div>
     </div>
 </div>
@@ -72,6 +76,25 @@
 
             login(username);
         });
+
+        $("#sendMessage").click(function () {
+            var message = $("#message").val();
+                 let obj = {
+                     "type": "user",
+                     "message": message,
+                     "nickname": 'user',
+                     "color": 'color'
+                 };
+                 //websocket.send(JSON.stringify(obj));
+
+            const div = $('<div />', {
+                text: obj.nickname + ": " + obj.message,
+            });
+            console.log(obj);
+            $("#message_box").append(div);
+
+                 $("#message").val("");
+        })
     });
 </script>
 

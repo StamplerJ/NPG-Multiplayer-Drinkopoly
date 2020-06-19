@@ -4,6 +4,7 @@ class Category extends Games
     private $correctAnswer;
     private $amount;
     private $isGameMaster;
+    private $category;
 
     public function __construct($value)
     {
@@ -12,6 +13,7 @@ class Category extends Games
         $this->correctAnswer = $value->correctAnswer;
         $this->amount = $value->amount;
         $this->isGameMaster = $value->isGameMaster;
+        $this->category = $value->category;
     }
 
     public function getUsername()
@@ -52,6 +54,11 @@ class Category extends Games
     public function getFinished()
     {
         return $this->finished;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
     }
 
 }
