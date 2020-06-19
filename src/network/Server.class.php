@@ -1,7 +1,8 @@
 #!/usr/bin/php
 <?php
-require("MessageHandler.class.php");
-require("SocketFunctions.util.php");
+require_once("MessageHandler.class.php");
+require_once("SocketFunctions.util.php");
+require_once("UserSocket.class.php");
 
 class Server
 {
@@ -10,7 +11,7 @@ class Server
     private $NULL = null;
 
     private $serverSocket;
-    private $clientSockets = array();
+    private $clients = array();
 
     private $messageHandler;
 
@@ -21,16 +22,19 @@ class Server
 
         socket_bind($this->serverSocket, $this->HOST, $this->PORT);
 
-        //$this->messageHandler = new MessageHandler($this);
+        $this->messageHandler = new MessageHandler($this);
 
         if (socket_listen($this->serverSocket))
         {
             echo "Listen on Port " . $this->PORT . "\n";
         }
 
-        while (1)
+        while (true)
         {
-            $socketsToWatch = $this->clientSockets;
+            $socketsToWatch = array();
+            foreach ($this->clients as $client) {
+                $socketsToWatch[] = $client->getSocket();
+            }
             $socketsToWatch[] = $this->serverSocket;
             $activeSocketsCount = socket_select($socketsToWatch, $this->NULL, $this->NULL, $this->NULL);
 
@@ -42,6 +46,7 @@ class Server
 
             if ($activeSocketsCount == 0)
             {
+                echo "Continue";
                 continue;
             }
 
@@ -55,20 +60,20 @@ class Server
 
                 $this->sendWelcomeMessage($newSocket);
 
-                $this->clientSockets[] = $newSocket;
+                $this->clients[] = new UserSocket($newSocket);
                 $index = array_search($this->serverSocket, $socketsToWatch);
                 unset($socketsToWatch[$index]);
             }
 
-            echo count($socketsToWatch);
-
             // Client socket handling
-            foreach ($socketsToWatch as $socket)
+            foreach ($this->clients as $client)
             {
-                socket_getpeername($socket, $clientIP);
+                echo "Clients: " . count($this->clients) . "\n";
+
+                socket_getpeername($client->getSocket(), $clientIP);
 
                 $end = false;
-                $text = (socket_read($socket, 1024));
+                $text = (socket_read($client->getSocket(), 1024));
 
                 if ($text === false || $text == "")
                 {
@@ -89,29 +94,33 @@ class Server
 
                 if ($end)
                 {
-                    $index = array_search($socket, $this->clientSockets);
-                    unset($this->clientSockets[$index]);
-                    socket_close($socket);
-
                     echo "Verbindung zu " . $clientIP . "  beendet \n";
 
+                    $index = array_search($client, $this->clients);
+
                     //Alle anderen Clients informieren:
-                    $msg = array('username' => 'Server', 'message' => "Client " . $clientIP . "  disconnected");
+                    $msg = array('username' => 'Server', 'message' => "User " . $this->clients[$index]->getUsername() . "  disconnected");
                     $jsonText = json_encode($msg);
-                    send_message($this->clientSockets, mask($jsonText));
+                    send_message($this->clients, mask($jsonText));
+
+                    // Remove socket
+                    socket_close($client->getSocket());
+                    unset($this->clients[$index]);
+
+                    echo "Clients after remove" . count($this->clients) . "\n";
                 }
                 else
                 {
-                    if (isset($messageObject->message))
+                    if (isset($messageObject->value))
                     {
-                        $this->handleMessage($messageObject);
+                        $this->handleMessage($client, $messageObject);
                     }
                 }
             }
         }
     }
 
-    private function handleMessage($message)
+    private function handleMessage($client, $message)
     {
         $type = $message->type;
         $value = $message->value;
@@ -119,22 +128,23 @@ class Server
         switch ($type)
         {
             case "login":
+                $client->setUsername($value->username);
                 $this->messageHandler->login($value);
                 break;
             default:
-                $this->sendTextToAllClients($value);
+                $this->sendTextToAllClients($client->getUsername(), $value->message);
         }
     }
 
-    public function sendTextToAllClients($text) {
+    public function sendTextToAllClients($username, $text) {
         $message = array('type' => 'chat',
                 'value' => array(
-                    'username' => "Add Username Feature",
-                    "message" => $text
+                    'username' => $username,
+                    'message' => $text
                 ));
 
         $encoded = json_encode($message);
-        send_message($this->clientSockets, mask($encoded));
+        send_message($this->clients, mask($encoded));
     }
 
     private function sendWelcomeMessage($socket)
@@ -156,6 +166,6 @@ class Server
         //Alle anderen Clients informieren:
         $msg = array('username' => 'Server', 'message' => "Neuer Client ".$clientIP." verbunden");
         $jsonText = json_encode($msg) ;
-        send_message($this->clientSockets, mask( $jsonText));
+        send_message($this->clients, mask( $jsonText));
     }
 }

@@ -69,10 +69,10 @@ function perform_handshaking($received_header, $client_conn, $host, $port)
     socket_write($client_conn, $upgrade, strlen($upgrade));
 }
 
-function send_message($socketsAdressaten, $msg)
+function send_message($clients, $msg)
 {
-    foreach ($socketsAdressaten as $socket)
+    foreach ($clients as $client)
     {
-        socket_write($socket, $msg, strlen($msg));
+        socket_write($client->getSocket(), $msg, strlen($msg));
     }
 }

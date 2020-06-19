@@ -15,6 +15,8 @@
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
     <script src="frontend/chat.js"></script>
+    <script src="frontend/message_handler.js"></script>
+    <script src="frontend/message_sender.js"></script>
 </head>
 <body>
 
@@ -72,6 +74,10 @@
 
             login(username);
         });
+
+        window.setInterval(function(){
+            sendChatMessage("Hallo");
+        }, 5000);
     });
 </script>
 

@@ -1,5 +1,5 @@
 <?php
-require("network/Server.class.php");
+require_once("network/Server.class.php");
 
 
 $server = new Server();

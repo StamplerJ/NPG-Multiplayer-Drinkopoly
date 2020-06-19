@@ -1,10 +1,13 @@
 <?php
 
-require("Server.class.php");
-require("../model/Login.class.php");
+require_once("Server.class.php");
+require_once(__DIR__."/../model/Login.class.php");
 
 class MessageHandler
 {
+    private $SERVER_NAME = "Server";
+    private $LOGIN_MESSAGE = "%s has joined the server";
+
     private $server;
 
     public function __construct(Server $server)
@@ -15,6 +18,6 @@ class MessageHandler
     public function login($value)
     {
         $login = new Login($value);
-        $this->server->sendTextToAllClients($login->getMessage());
+        $this->server->sendTextToAllClients($this->SERVER_NAME, sprintf($this->LOGIN_MESSAGE, $login->getUsername()));
     }
 }
