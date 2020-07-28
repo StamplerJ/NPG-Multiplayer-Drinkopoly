@@ -2,7 +2,25 @@ const wsUri = "ws://ux-113.pb.bib.de:22408";
 let websocket;
 let username;
 
+$(document).ready(function () {
+    $("#sendMessage").click(function () {
+        let message = $("#message").val();
+        if (message.length > 0) {
+            sendChatMessage(message);
+            $("#message").val("");
+        }
+    });
+
+    $("#message").keypress(function (event) {
+        let keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            $("#sendMessage").click();
+        }
+    });
+});
+
 function displayMessage(input) {
+    console.log(input)
     const div = $('<div />', {
         text: input.username + ": " + input.message,
     });
@@ -32,8 +50,6 @@ function setupWebsocket() {
 
     websocket.onmessage = function(ev) {
         let input = JSON.parse(ev.data);
-        console.log("Input");
-        console.log(input);
         handleMessage(input);
     };
 

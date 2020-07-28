@@ -79,28 +79,13 @@
             login(username);
         });
 
-        // window.setInterval(function(){
-        //     sendChatMessage("Hallo");
-        // }, 5000);
-
-        $("#sendMessage").click(function () {
-            var message = $("#message").val();
-                 let obj = {
-                     "type": "user",
-                     "message": message,
-                     "nickname": 'user',
-                     "color": 'color'
-                 };
-                 //websocket.send(JSON.stringify(obj));
-
-            const div = $('<div />', {
-                text: obj.nickname + ": " + obj.message,
-            });
-            console.log(obj);
-            $("#message_box").append(div);
-
-                 $("#message").val("");
-        })
+        // Enter key event handling below
+        $("#username").keypress(function(event) {
+            let keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13') {
+                $("#loginButton").click();
+            }
+        });
     });
 </script>
 

@@ -10,6 +10,8 @@ class Server
     private $PORT = 22408;
     private $NULL = null;
 
+    private $SERVER_USERNAME = 'Server';
+
     private $serverSocket;
     private $clients = array();
 
@@ -153,18 +155,30 @@ class Server
 
         echo "Client " . $clientIP . " connected \n";
 
-        $msg = array('username' => 'Server', 'message' => "Verbindung erfolgreich!");
+        $msg = array('type' => 'chat',
+            'value' => array(
+                'username' => $this->SERVER_USERNAME,
+                'message' => "Verbindung erfolgreich!"
+            ));
         $jsonMsg = json_encode($msg) ;
         $sendMsg = mask($jsonMsg);
         socket_write($socket, $sendMsg, strlen($sendMsg));
 
-        $msg = array('username' => 'Server', 'message' => "Hallo ".$clientIP. ", herzlich willkommen!");
+        $msg = array('type' => 'chat',
+            'value' => array(
+                'username' => $this->SERVER_USERNAME,
+                'message' => "Hallo ".$clientIP. ", herzlich willkommen!"
+            ));
         $jsonMsg = json_encode($msg) ;
         $sendMsg = mask($jsonMsg);
         socket_write($socket, $sendMsg, strlen($sendMsg));
 
         //Alle anderen Clients informieren:
-        $msg = array('username' => 'Server', 'message' => "Neuer Client ".$clientIP." verbunden");
+        $msg = array('type' => 'chat',
+            'value' => array(
+                'username' => $this->SERVER_USERNAME,
+                'message' => "Neuer Client ".$clientIP." verbunden"
+            ));
         $jsonText = json_encode($msg) ;
         send_message($this->clients, mask( $jsonText));
     }

@@ -13,7 +13,6 @@ function handleMessage(message) {
 }
 
 function onChatMessage(value) {
-    console.log(value);
     displayMessage(value);
 }
 
