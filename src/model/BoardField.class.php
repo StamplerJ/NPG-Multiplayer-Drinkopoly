@@ -9,12 +9,11 @@ class BoardField
     private $game;
     private $players;
 
-    public function __construct($index, $text, $game, $players)
+    public function __construct($index, $text, $game)
     {
         $this->index = $index;
         $this->text = $text;
         $this->game = $game;
-        $this->players = $players;
     }
 
     public function addPlayer($player) {
@@ -29,21 +28,10 @@ class BoardField
     }
 
     public function getData() {
-        $playersData = array();
-        foreach ($this->players as $player) {
-            $temp = array(
-                'name' => 'Player1',
-                'fieldIndex' => $this->index,
-                'color' => '#ff0011'
-            );
-            $playersData[] = $temp;
-        }
-
         return array(
                 'index' => $this->index,
                 'text' => $this->text,
-                'game' => $this->game,
-                'players' => $playersData
+                'game' => $this->game
             );
     }
 

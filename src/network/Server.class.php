@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-require_once("GameBoardManager.class.php");
+require_once("GameManager.class.php");
 require_once("MessageHandler.class.php");
 require_once("SocketFunctions.util.php");
 require_once("UserSocket.class.php");
@@ -16,7 +16,7 @@ class Server
     private $serverSocket;
     private $clients = array();
 
-    private $gameBoardManager;
+    private $gameManager;
     private $messageHandler;
 
     public function __construct()
@@ -26,7 +26,7 @@ class Server
 
         socket_bind($this->serverSocket, $this->HOST, $this->PORT);
 
-        $this->gameBoardManager = new GameBoardManager();
+        $this->gameManager = new GameManager();
         $this->messageHandler = new MessageHandler($this);
 
         if (socket_listen($this->serverSocket))
@@ -182,8 +182,8 @@ class Server
         $this->sendTextToAllClients($this->SERVER_USERNAME, "Neuer Client ".$clientIP." verbunden");
     }
 
-    public function getGameBoardManager()
+    public function getGameManager()
     {
-        return $this->gameBoardManager;
+        return $this->gameManager;
     }
 }

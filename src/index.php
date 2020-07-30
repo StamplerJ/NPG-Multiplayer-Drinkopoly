@@ -19,7 +19,8 @@
     <script src="frontend/chat.js"></script>
     <script src="frontend/message_handler.js"></script>
     <script src="frontend/message_sender.js"></script>
-    <script src="frontend/game_board.js"></script>
+    <script src="frontend/controllers/game_board.js"></script>
+    <script src="frontend/controllers/players.js"></script>
 </head>
 <body>
 

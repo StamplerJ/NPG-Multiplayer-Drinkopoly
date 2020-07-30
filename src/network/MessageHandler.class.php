@@ -25,7 +25,8 @@ class MessageHandler
                 'successful' => true,
                 'username' => $login->getUsername(),
                 'message' => "",
-                'board' => $this->server->getGameBoardManager()->getFieldsData()
+                'board' => $this->server->getGameManager()->getFieldsData(),
+                'players' => $this->server->getGameManager()->getPlayersData()
             ));
         $this->server->sendMessage($client->getSocket(), $message);
     }

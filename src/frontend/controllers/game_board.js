@@ -25,11 +25,6 @@ function initializeBoard(fieldsData) {
         let field = fields[data.index];
         field.text = data.text;
         field.game = data.game;
-
-        for (let j = 0; j < data.players.length; j++) {
-            let player = data.players[j];
-            field.players.push(new Player(player.name, player.index, player.color));
-        }
     }
     drawBoard();
 }

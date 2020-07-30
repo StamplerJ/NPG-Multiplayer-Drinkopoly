@@ -14,6 +14,14 @@ class Player
         $this->color = $color;
     }
 
+    public function getData() {
+        return array(
+            'name' => $this->name,
+            'fieldIndex' => $this->fieldIndex,
+            'color' => $this->color
+        );
+    }
+
     public function getName()
     {
         return $this->name;

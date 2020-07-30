@@ -10,19 +10,10 @@ class Field {
         this.height = height;
         this.text = "";
         this.game = "";
-        this.players = [];
     }
 
-    draw(context) {
+    draw(context, players) {
         context.strokeRect(this.x, this.y , this.width, this.height);
-
-        let radius = this.width / 8;
-        for (let i = 0; i < this.players.length; i++) {
-            this.players[i].draw(context,
-                this.x + (radius * 2) * (i + 1) - radius,
-                this.y + this.height - radius,
-                radius);
-        }
 
         context.textAlign = "center";
         let lines = this.getLines(context, this.text, this.width);

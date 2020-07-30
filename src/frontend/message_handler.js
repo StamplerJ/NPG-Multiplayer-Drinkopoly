@@ -18,4 +18,5 @@ function onChatMessage(value) {
 
 function onLogin(value) {
     initializeBoard(value.board);
+    initializePlayers(value.players);
 }
