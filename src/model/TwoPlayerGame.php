@@ -1,5 +1,5 @@
 <?php
-class TwoPlayerGames extends Games
+class TwoPlayerGame extends Game
 {
     protected $playerOne;
     protected $playerTwo;

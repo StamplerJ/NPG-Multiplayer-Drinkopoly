@@ -15,9 +15,18 @@ class MessageHandler
         $this->server = $server;
     }
 
-    public function login($value)
+    public function login($client, $value)
     {
         $login = new Login($value);
         $this->server->sendTextToAllClients($this->SERVER_NAME, sprintf($this->LOGIN_MESSAGE, $login->getUsername()));
+
+        $message = array('type' => 'login',
+            'value' => array(
+                'successful' => true,
+                'username' => $login->getUsername(),
+                'message' => "",
+                'board' => $this->server->getGameBoardManager()->getFieldsData()
+            ));
+        $this->server->sendMessage($client->getSocket(), $message);
     }
 }

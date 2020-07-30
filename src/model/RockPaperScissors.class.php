@@ -1,6 +1,8 @@
 <?php
-class RockPaperScissors extends TwoPlayerGames
+class RockPaperScissors extends TwoPlayerGame
 {
+    private $type = Games::ROCKPAPERSCISSORS;
+
     private $hand;
 
     public function __construct($value)

@@ -1,6 +1,8 @@
 <?php
-class ConnectFour extends TwoPlayerGames
+class ConnectFour extends TwoPlayerGame
 {
+    private $type = Games::CONNECTFOUR;
+
     public function __construct($value)
     {
         parent::__construct($value);

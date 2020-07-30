@@ -1,6 +1,8 @@
 <?php
-class NeverEver extends Games
+class NeverEver extends Game
 {
+    private $type = Games::NEVEREVER;
+
     private $answer;
 
     public function __construct($value)

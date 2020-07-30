@@ -17,5 +17,5 @@ function onChatMessage(value) {
 }
 
 function onLogin(value) {
-    console.log(value);
+    initializeBoard(value.board);
 }

@@ -1,6 +1,8 @@
 <?php
-class Category extends Games
+class Category extends Game
 {
+    private $type = Games::CATEGORY;
+
     private $correctAnswer;
     private $amount;
     private $isGameMaster;

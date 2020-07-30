@@ -1,5 +1,6 @@
 #!/usr/bin/php
 <?php
+require_once("GameBoardManager.class.php");
 require_once("MessageHandler.class.php");
 require_once("SocketFunctions.util.php");
 require_once("UserSocket.class.php");
@@ -15,6 +16,7 @@ class Server
     private $serverSocket;
     private $clients = array();
 
+    private $gameBoardManager;
     private $messageHandler;
 
     public function __construct()
@@ -24,6 +26,7 @@ class Server
 
         socket_bind($this->serverSocket, $this->HOST, $this->PORT);
 
+        $this->gameBoardManager = new GameBoardManager();
         $this->messageHandler = new MessageHandler($this);
 
         if (socket_listen($this->serverSocket))
@@ -131,7 +134,7 @@ class Server
         {
             case "login":
                 $client->setUsername($value->username);
-                $this->messageHandler->login($value);
+                $this->messageHandler->login($client, $value);
                 break;
             default:
                 $this->sendTextToAllClients($client->getUsername(), $value->message);
@@ -149,6 +152,12 @@ class Server
         send_message($this->clients, mask($encoded));
     }
 
+    public function sendMessage($socket, $message) {
+        $jsonMsg = json_encode($message) ;
+        $sendMsg = mask($jsonMsg);
+        socket_write($socket, $sendMsg, strlen($sendMsg));
+    }
+
     private function sendWelcomeMessage($socket)
     {
         socket_getpeername($socket, $clientIP);
@@ -160,26 +169,21 @@ class Server
                 'username' => $this->SERVER_USERNAME,
                 'message' => "Verbindung erfolgreich!"
             ));
-        $jsonMsg = json_encode($msg) ;
-        $sendMsg = mask($jsonMsg);
-        socket_write($socket, $sendMsg, strlen($sendMsg));
+        $this->sendMessage($socket, $msg);
 
         $msg = array('type' => 'chat',
             'value' => array(
                 'username' => $this->SERVER_USERNAME,
                 'message' => "Hallo ".$clientIP. ", herzlich willkommen!"
             ));
-        $jsonMsg = json_encode($msg) ;
-        $sendMsg = mask($jsonMsg);
-        socket_write($socket, $sendMsg, strlen($sendMsg));
+        $this->sendMessage($socket, $msg);
 
         //Alle anderen Clients informieren:
-        $msg = array('type' => 'chat',
-            'value' => array(
-                'username' => $this->SERVER_USERNAME,
-                'message' => "Neuer Client ".$clientIP." verbunden"
-            ));
-        $jsonText = json_encode($msg) ;
-        send_message($this->clients, mask( $jsonText));
+        $this->sendTextToAllClients($this->SERVER_USERNAME, "Neuer Client ".$clientIP." verbunden");
+    }
+
+    public function getGameBoardManager()
+    {
+        return $this->gameBoardManager;
     }
 }

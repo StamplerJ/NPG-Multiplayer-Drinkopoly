@@ -1,5 +1,5 @@
 <?php
-class Games
+class Game
 {
     protected $username;
     protected $time;

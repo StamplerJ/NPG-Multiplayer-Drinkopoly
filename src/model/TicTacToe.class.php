@@ -1,6 +1,8 @@
 <?php
-class TicTacToe extends TwoPlayerGames
+class TicTacToe extends TwoPlayerGame
 {
+    private $type = Games::TICTACTOE;
+
     public function __construct($value)
     {
         parent::__construct($value);

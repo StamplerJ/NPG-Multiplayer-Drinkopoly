@@ -1,6 +1,8 @@
 <?php
-class Pong extends TwoPlayerGames
+class Pong extends TwoPlayerGame
 {
+    private $type = Games::PONG;
+
     protected $ballPosition;
 
     public function __construct($value)

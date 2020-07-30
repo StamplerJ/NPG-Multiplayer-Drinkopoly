@@ -14,9 +14,12 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
+    <script src="frontend/model/field.class.js"></script>
+    <script src="frontend/model/player.class.js"></script>
     <script src="frontend/chat.js"></script>
     <script src="frontend/message_handler.js"></script>
     <script src="frontend/message_sender.js"></script>
+    <script src="frontend/game_board.js"></script>
 </head>
 <body>
 
