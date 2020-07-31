@@ -3,6 +3,7 @@ class UserSocket
 {
     private $username;
     private $socket;
+    private $player;
 
     public function __construct($socket, $username = "EMPTY USERNAME")
     {
@@ -14,8 +15,19 @@ class UserSocket
     {
         echo "Unset socket";
         unset($socket);
+
+        // TODO: Remove player when exiting
     }
 
+    public function getPlayer()
+    {
+        return $this->player;
+    }
+
+    public function setPlayer($player)
+    {
+        $this->player = $player;
+    }
 
     public function getUsername()
     {

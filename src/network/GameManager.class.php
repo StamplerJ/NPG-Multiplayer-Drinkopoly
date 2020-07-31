@@ -2,6 +2,7 @@
 
 require_once("Server.class.php");
 require_once(__DIR__."/../model/BoardField.class.php");
+require_once(__DIR__."/../model/Player.class.php");
 require_once(__DIR__."/../model/enums/Games.class.php");
 
 class GameManager
@@ -29,6 +30,13 @@ class GameManager
         $this->players[] = new Player("Player1", 0, "#ff0011");
         $this->players[] = new Player("Player2", 0, "#33ff11");
         $this->players[] = new Player("Player3", 2, "#3344e1");
+    }
+
+    public function createPlayer($username) {
+        $player = new Player($username, 0, sprintf('#%06X', mt_rand(0, 0xFFFFFF)));
+        $this->players[] = $player;
+
+        return $player;
     }
 
     public function getFieldsData() {

@@ -63,6 +63,8 @@
             <input id="sendMessage" type="button" value="Send"/>
             <input id="voteYes" type="button" value=" + " display="none"/>
             <input id="voteNo" type="button" value=" - " visibility="hidden"/>
+            <br/>
+            <input id="dice" type="button" value="Würfeln"/>
         </div>
     </div>
 </div>
@@ -81,6 +83,10 @@
             $("#game").removeClass("d-none");
 
             login(username);
+        });
+
+        $("#dice").click(function() {
+            rollDice();
         });
 
         // Enter key event handling below

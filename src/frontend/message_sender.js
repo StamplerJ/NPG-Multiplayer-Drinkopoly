@@ -10,3 +10,16 @@ function sendChatMessage(message) {
 
     websocket.send(JSON.stringify(obj));
 }
+
+function rollDice(username) {
+    let obj = {
+        "type": "board_turn",
+        value: {
+            "username": username,
+            dice: null,
+            player_positions: []
+        }
+    };
+
+    websocket.send(JSON.stringify(obj));
+}

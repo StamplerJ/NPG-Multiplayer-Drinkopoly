@@ -4,16 +4,24 @@ class BoardTurn
     private $username;
     private $turn;
     private $dice;
-    private $destination_event;
     private $player_position;
 
     public function __construct($value)
     {
         $this->username = $value->username;
         $this->turn = $value->turn;
-        $this->dice = $value->dice;
-        $this->destination_event = $value->destination_event;
         $this->player_position = $value->player_position;
+
+        if($value->dice != null) {
+            $this->dice = $value->dice;
+        }
+        else {
+            try {
+                $this->dice = random_int(1, 6);
+            } catch (Exception $e) {
+                echo $e;
+            }
+        }
     }
 
     public function getUsername()
@@ -35,10 +43,4 @@ class BoardTurn
     {
         return $this->turn;
     }
-
-    public function getDestinationEvent()
-    {
-        return $this->destination_event;
-    }
-
 }

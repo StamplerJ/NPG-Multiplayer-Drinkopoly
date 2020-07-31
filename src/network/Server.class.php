@@ -1,6 +1,5 @@
 #!/usr/bin/php
 <?php
-require_once("GameManager.class.php");
 require_once("MessageHandler.class.php");
 require_once("SocketFunctions.util.php");
 require_once("UserSocket.class.php");
@@ -16,7 +15,6 @@ class Server
     private $serverSocket;
     private $clients = array();
 
-    private $gameManager;
     private $messageHandler;
 
     public function __construct()
@@ -26,7 +24,6 @@ class Server
 
         socket_bind($this->serverSocket, $this->HOST, $this->PORT);
 
-        $this->gameManager = new GameManager();
         $this->messageHandler = new MessageHandler($this);
 
         if (socket_listen($this->serverSocket))
@@ -58,6 +55,7 @@ class Server
             // Server socket handling
             if (in_array($this->serverSocket, $socketsToWatch))
             {
+                echo "Server handling";
                 $newSocket = socket_accept($this->serverSocket);
 
                 $header = socket_read($newSocket, 1024);
@@ -71,14 +69,20 @@ class Server
             }
 
             // Client socket handling
-            foreach ($this->clients as $client)
-            {
-                echo "Clients: " . count($this->clients) . "\n";
+            $clientsToWatch = array();
+            foreach ($this->clients as $client) {
+                foreach ($socketsToWatch as $socket) {
+                    if($socket == $client->getSocket())
+                        $clientsToWatch[] = $client;
+                }
+            }
 
+            foreach ($clientsToWatch as $client)
+            {
                 socket_getpeername($client->getSocket(), $clientIP);
 
                 $end = false;
-                $text = (socket_read($client->getSocket(), 1024));
+                $text = socket_read($client->getSocket(), 1024);
 
                 if ($text === false || $text == "")
                 {
@@ -112,32 +116,16 @@ class Server
                     socket_close($client->getSocket());
                     unset($this->clients[$index]);
 
-                    echo "Clients after remove" . count($this->clients) . "\n";
+                    echo "Clients after remove: " . count($this->clients) . "\n";
                 }
                 else
                 {
                     if (isset($messageObject->value))
                     {
-                        $this->handleMessage($client, $messageObject);
+                        $this->messageHandler->handleMessage($client, $messageObject);
                     }
                 }
             }
-        }
-    }
-
-    private function handleMessage($client, $message)
-    {
-        $type = $message->type;
-        $value = $message->value;
-
-        switch ($type)
-        {
-            case "login":
-                $client->setUsername($value->username);
-                $this->messageHandler->login($client, $value);
-                break;
-            default:
-                $this->sendTextToAllClients($client->getUsername(), $value->message);
         }
     }
 
@@ -156,6 +144,11 @@ class Server
         $jsonMsg = json_encode($message) ;
         $sendMsg = mask($jsonMsg);
         socket_write($socket, $sendMsg, strlen($sendMsg));
+    }
+
+    public function sendMessageToAllClients($message) {
+        $encoded = json_encode($message);
+        send_message($this->clients, mask($encoded));
     }
 
     private function sendWelcomeMessage($socket)
@@ -180,10 +173,5 @@ class Server
 
         //Alle anderen Clients informieren:
         $this->sendTextToAllClients($this->SERVER_USERNAME, "Neuer Client ".$clientIP." verbunden");
-    }
-
-    public function getGameManager()
-    {
-        return $this->gameManager;
     }
 }
