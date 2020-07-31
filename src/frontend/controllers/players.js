@@ -4,11 +4,15 @@ $(document).ready(function () {
 
 });
 
+
+
+
 function initializePlayers(playersData) {
     for (let i = 0; i < playersData.length; i++) {
         let data = playersData[i];
         let player = new Player(data.name, data.fieldIndex, data.color);
         players.push(player);
+        addToPlayerList(player);
     }
     drawPlayers(fields);
 }
@@ -23,4 +27,11 @@ function drawPlayers(fields) {
             field.y + field.height - radius,
             radius);
     }
+}
+
+function addToPlayerList(player) {
+    let ul = document.getElementById("playerlist");
+    let li = document.createElement("li");
+    li.appendChild(document.createTextNode(player.name));
+    ul.appendChild(li);
 }

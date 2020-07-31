@@ -50,8 +50,6 @@
             <div id="playerlistContainer" class="border rounded">
                 <h4>Spielerliste:</h4>
                 <ul id="playerlist">
-                    <li>Jann</li>
-                    <li>Veit</li>
                 </ul>
             </div>
             <div id="chat" class="border rounded flex-grow-1">
@@ -61,8 +59,9 @@
             </div>
             <input id="message" type="text" width="100%"/>
             <input id="sendMessage" type="button" value="Send"/>
-            <input id="voteYes" type="button" value=" + " display="none"/>
-            <input id="voteNo" type="button" value=" - " visibility="hidden"/>
+            <input id="sendAnswer" type="button" value="Answer" class="d-none"/>
+            <input id="voteYes" type="button" value=" + " class="d-none"/>
+            <input id="voteNo" type="button" value=" - " class="d-none"/>
         </div>
     </div>
 </div>
