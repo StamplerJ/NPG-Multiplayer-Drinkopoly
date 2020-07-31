@@ -3,7 +3,6 @@ class Category extends Game
 {
     private $type = Games::CATEGORY;
 
-    private $correctAnswer;
     private $amount;
     private $isGameMaster;
     private $category;
@@ -12,7 +11,6 @@ class Category extends Game
     {
         parent::__construct($value);
 
-        $this->correctAnswer = $value->correctAnswer;
         $this->amount = $value->amount;
         $this->isGameMaster = $value->isGameMaster;
         $this->category = $value->category;
