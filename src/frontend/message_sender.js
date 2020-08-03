@@ -24,26 +24,24 @@ function rollDice(username) {
     websocket.send(JSON.stringify(obj));
 }
 
-function sendCategoryAnswer(message) {
+function sendCategoryAnswer(answer) {
     let obj = {
         "type": "category",
         value: {
-            "successful": null,
             "username": username,
-            "message": message
+            "message": answer
         }
     };
 
     websocket.send(JSON.stringify(obj));
 }
 
-function sendNeverEverAnswer(message) {
+function sendNeverEverAnswer(answer) {
     let obj = {
         "type": "neverever",
         value: {
-            "successful": null,
             "username": username,
-            "message": message
+            "answer": answer
         }
     };
 

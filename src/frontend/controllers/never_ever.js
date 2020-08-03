@@ -18,7 +18,3 @@ $(document).ready(function () {
         $("#voteNo").addClass("d-none");
     });
 });
-
-function distributeQuestion() {
-    //return questions[Math.floor(Math.random() * questions.length)];
-}

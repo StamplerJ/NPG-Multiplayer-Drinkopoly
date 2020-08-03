@@ -9,6 +9,8 @@ class GameManager
 {
     private $fields;
     private $players;
+    private $categories;
+    private $neverEverQuestions;
 
     public function __construct()
     {
@@ -30,6 +32,21 @@ class GameManager
         $this->players[] = new Player("Player1", 0, "#ff0011");
         $this->players[] = new Player("Player2", 0, "#33ff11");
         $this->players[] = new Player("Player3", 2, "#3344e1");
+
+        $this->categories = array();
+        $this->categories[] = "Autos";
+        $this->categories[] = "Speisen";
+        $this->categories[] = "Getränke";
+        $this->categories[] = "Ballsportarten";
+        $this->categories[] = "Bier Marken";
+
+        $this->neverEverQuestions = array();
+        $this->neverEverQuestions[] = "Ich habe noch nie gestohlen.";
+        $this->neverEverQuestions[] = "Ich habe mich noch nie geschlagen.";
+        $this->neverEverQuestions[] = "Ich habe noch nie Blut gespendet.";
+        $this->neverEverQuestions[] = "Ich habe noch nie den Bruder oder die Schwester eines Freundes begehrt.";
+        $this->neverEverQuestions[] = "Ich habe noch nie einen Kontinent-Übergreifenden Krieg mit einer Weltmacht angezettelt.";
+
     }
 
     public function createPlayer($username) {
@@ -53,6 +70,28 @@ class GameManager
 
         foreach ($this->players as $player)
             $data[] = $player->getData();
+
+        return $data;
+    }
+
+    public function getCategoryData() {
+        $data = array();
+
+        foreach ($this->categories as $category)
+            $data[] = $category->getData();
+
+        return $data;
+    }
+
+    public function selectGameMaster() {
+        return $this->players[Math.floor(Math.random() * players.length)].name;
+    }
+
+    public function getNeverEverData() {
+        $data = array();
+
+        foreach ($this->neverEverQuestions as $neverEver)
+            $data[] = $neverEver->getData();
 
         return $data;
     }

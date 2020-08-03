@@ -25,7 +25,7 @@ function onLogin(value) {
 }
 
 function onCategory(value) {
+    //TODO gamemaster (- Button, bei klick drink +1)
     displayAnswer(value);
-    selectGameMaster();
-    distributeCategory();
+    distributeCategory(value.category);
 }
