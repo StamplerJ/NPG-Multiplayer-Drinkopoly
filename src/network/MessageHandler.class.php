@@ -31,7 +31,6 @@ class MessageHandler
                 $this->login($client, $value);
                 break;
             case "board_turn":
-                echo "board_turn";
                 $this->rollDice($client, $value);
                 break;
             default:
@@ -41,14 +40,28 @@ class MessageHandler
 
     public function rollDice($client, $value) {
         $boardTurn = new BoardTurn($value);
+        $destinationFieldIndex = null;
 
-        // TODO: Change player position based on dice
+        // Change player position based on dice
+        $players = $this->gameManager->getPlayers();
+        foreach ($players as $player) {
+            if($player->getName() == $boardTurn->getUsername()) {
+                $player->addSteps($boardTurn->getDice());
+                $destinationFieldIndex = $player->getFieldIndex();
+                break;
+            }
+        }
+        $boardTurn->setPlayerPositions($players);
 
+        // Select game of new field
+        $game = $this->gameManager->getFields()[$destinationFieldIndex]->getGame();
+
+        // Send new field positions to all players
         $message = array('type' => 'board_turn',
             'value' => array(
                 "username" => $boardTurn->getUsername(),
                 "dice" => $boardTurn->getDice(),
-                "player_positions" => $boardTurn->getPlayerPosition()
+                "player_positions" => $boardTurn->getPlayerPositionsData()
             ));
         $this->server->sendMessageToAllClients($message);
     }
@@ -71,5 +84,22 @@ class MessageHandler
                 'players' => $this->gameManager->getPlayersData()
             ));
         $this->server->sendMessage($client->getSocket(), $message);
+    }
+
+    public function removePlayer($username) {
+        $indexToDelete = null;
+
+        $players = $this->gameManager->getPlayers();
+        foreach ($this->gameManager->getPlayers() as $key => &$player) {
+            if($player->getName() === $username) {
+                $indexToDelete = $key;
+                break;
+            }
+        }
+
+        if($indexToDelete != null) {
+            unset($players[$indexToDelete]);
+            $this->gameManager->setPlayers($players);
+        }
     }
 }

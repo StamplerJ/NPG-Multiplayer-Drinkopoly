@@ -12,7 +12,7 @@ class Field {
         this.game = "";
     }
 
-    draw(context, players) {
+    draw(context) {
         context.strokeRect(this.x, this.y , this.width, this.height);
 
         context.textAlign = "center";

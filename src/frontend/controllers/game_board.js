@@ -29,10 +29,28 @@ function initializeBoard(fieldsData) {
     drawBoard();
 }
 
+function boardTurn(value) {
+    let playerPositions = value.player_positions;
+    players.forEach(player => {
+        playerPositions.forEach(pos =>  {
+            if(player.name === pos.name) {
+                player.fieldIndex = pos.fieldIndex;
+            }
+        });
+    });
+    drawBoard();
+}
+
 function drawBoard() {
+    clearCanvas();
     for (let i = 0; i < fields.length; i++) {
         fields[i].draw(context);
     }
+    drawPlayers(fields);
+}
+
+function clearCanvas() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function setupGameBoard() {

@@ -16,10 +16,10 @@ function rollDice(username) {
         "type": "board_turn",
         value: {
             "username": username,
-            dice: null,
-            player_positions: []
+            "dice": null,
+            "player_positions": []
         }
-    }
+    };
 
     websocket.send(JSON.stringify(obj));
 }

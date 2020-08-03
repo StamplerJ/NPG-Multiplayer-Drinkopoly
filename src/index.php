@@ -71,7 +71,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loginButton").click(function() {
-            let username = $("#username").val();
+            username = $("#username").val();
 
             if (username === "") {
                 return;
@@ -84,7 +84,7 @@
         });
 
         $("#dice").click(function() {
-            rollDice();
+            rollDice(username);
         });
 
         // Enter key event handling below

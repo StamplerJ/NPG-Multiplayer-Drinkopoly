@@ -4,9 +4,6 @@ $(document).ready(function () {
 
 });
 
-
-
-
 function initializePlayers(playersData) {
     for (let i = 0; i < playersData.length; i++) {
         let data = playersData[i];
@@ -14,7 +11,7 @@ function initializePlayers(playersData) {
         players.push(player);
         addToPlayerList(player);
     }
-    drawPlayers(fields);
+    drawBoard();
 }
 
 function drawPlayers(fields) {

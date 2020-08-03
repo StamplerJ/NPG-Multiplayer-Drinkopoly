@@ -22,6 +22,13 @@ class Player
         );
     }
 
+    public function addSteps($steps) {
+        $this->fieldIndex += $steps;
+
+        if($this->fieldIndex >= GameManager::$FIELD_COUNT)
+            $this->fieldIndex -= GameManager::$FIELD_COUNT;
+    }
+
     public function getName()
     {
         return $this->name;

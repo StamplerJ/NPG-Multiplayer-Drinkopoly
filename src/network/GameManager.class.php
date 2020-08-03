@@ -7,6 +7,8 @@ require_once(__DIR__."/../model/enums/Games.class.php");
 
 class GameManager
 {
+    public static $FIELD_COUNT = 20;
+
     private $fields;
     private $players;
 
@@ -30,6 +32,15 @@ class GameManager
         $this->players[] = new Player("Player1", 0, "#ff0011");
         $this->players[] = new Player("Player2", 0, "#33ff11");
         $this->players[] = new Player("Player3", 2, "#3344e1");
+    }
+
+    public function handleGame($game) {
+        switch ($game) {
+            case Games::SHOTANDDRINK:
+                // TODO: Game handling implementieren
+                break;
+            default:
+        }
     }
 
     public function createPlayer($username) {
@@ -65,5 +76,15 @@ class GameManager
     public function setFields($fields)
     {
         $this->fields = $fields;
+    }
+
+    public function getPlayers()
+    {
+        return $this->players;
+    }
+
+    public function setPlayers($players)
+    {
+        $this->players = $players;
     }
 }

@@ -7,6 +7,9 @@ function handleMessage(message) {
         case "login":
             onLogin(value);
             break;
+        case "board_turn":
+            onBoardTurn(value);
+            break;
         case "category":
             onCategory(value);
             break;
@@ -22,6 +25,10 @@ function onChatMessage(value) {
 function onLogin(value) {
     initializeBoard(value.board);
     initializePlayers(value.players);
+}
+
+function onBoardTurn(value) {
+    boardTurn(value);
 }
 
 function onCategory(value) {

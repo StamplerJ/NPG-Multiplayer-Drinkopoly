@@ -55,7 +55,6 @@ class Server
             // Server socket handling
             if (in_array($this->serverSocket, $socketsToWatch))
             {
-                echo "Server handling";
                 $newSocket = socket_accept($this->serverSocket);
 
                 $header = socket_read($newSocket, 1024);
@@ -112,11 +111,11 @@ class Server
                     $jsonText = json_encode($msg);
                     send_message($this->clients, mask($jsonText));
 
+                    $this->messageHandler->removePlayer($this->clients[$index]->getUsername());
+
                     // Remove socket
                     socket_close($client->getSocket());
                     unset($this->clients[$index]);
-
-                    echo "Clients after remove: " . count($this->clients) . "\n";
                 }
                 else
                 {

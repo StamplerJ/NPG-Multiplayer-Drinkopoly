@@ -2,15 +2,13 @@
 class BoardTurn
 {
     private $username;
-    private $turn;
     private $dice;
-    private $player_position;
+    private $player_positions;
 
     public function __construct($value)
     {
         $this->username = $value->username;
-        $this->turn = $value->turn;
-        $this->player_position = $value->player_position;
+        $this->player_positions = $value->player_positions;
 
         if($value->dice != null) {
             $this->dice = $value->dice;
@@ -24,6 +22,15 @@ class BoardTurn
         }
     }
 
+    public function getPlayerPositionsData() {
+        $data = array();
+
+        foreach ($this->player_positions as $player)
+            $data[] = $player->getData();
+
+        return $data;
+    }
+
     public function getUsername()
     {
         return $this->username;
@@ -34,13 +41,23 @@ class BoardTurn
         return $this->dice;
     }
 
-    public function getPlayerPosition()
+    public function getPlayerPositions()
     {
-        return $this->player_position;
+        return $this->player_positions;
     }
 
-    public function getTurn()
+    public function setUsername($username)
     {
-        return $this->turn;
+        $this->username = $username;
+    }
+
+    public function setDice($dice)
+    {
+        $this->dice = $dice;
+    }
+
+    public function setPlayerPositions($player_positions)
+    {
+        $this->player_positions = $player_positions;
     }
 }
