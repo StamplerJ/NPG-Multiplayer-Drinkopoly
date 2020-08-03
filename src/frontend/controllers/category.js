@@ -27,10 +27,6 @@ function displayAnswer(input) {
     $("#message_box").append(div);
 }
 
-function selectGameMaster() {
-    return players[Math.floor(Math.random() * players.length)].name;
-}
-
-function distributeCategory() {
-    //return categories[Math.floor(Math.random() * categories.length)];
+function distributeCategory(categories) {
+    return categories[Math.floor(Math.random() * categories.length)];
 }
