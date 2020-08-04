@@ -26,9 +26,7 @@ class Player
         $this->fieldIndex += $steps;
 
         if($this->fieldIndex >= GameManager::$FIELD_COUNT) {
-            echo $this->fieldIndex;
             $this->fieldIndex -= GameManager::$FIELD_COUNT;
-            echo $this->fieldIndex;
         }
     }
 

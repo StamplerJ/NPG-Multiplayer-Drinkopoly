@@ -27,11 +27,27 @@
 <h1 class="text-center">Drinkopoly</h1>
 
 <div id="login">
-    <h2>Join Drinkopoly</h2>
-    <div>
-        Username:
-        <input id="username" type="text"/>
-        <input id="loginButton" type="button" value="Login">
+    <div class="container h-100">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <div class="brand_logo_container">
+                        <img src="icon.png" class="brand_logo" alt="Logo">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center form_container row">
+                    <div class="col-12 input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input id="username" type="text" name="" class="form-control input_user" value="" placeholder="Username">
+                    </div>
+                    <div class="col-12 d-flex justify-content-center mt-3 login_container">
+                        <button id="loginButton" type="button" name="button" class="btn login_btn">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -44,8 +60,8 @@
         <div id="side" class="col">
             <div id="score" class="border rounded">
                 <h4>Sip Counter:</h4>
-                <p id="drinks">Drinks: 0</p>
-                <p id="shots">Shots: 0</p>
+                <p id="drinks">Drinks: <span id="drinkValue">0</span></p>
+                <p id="shots">Shots: <span id="shotValue">0</span></p>
             </div>
             <div id="playerlistContainer" class="border rounded">
                 <h4>Spielerliste:</h4>

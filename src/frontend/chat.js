@@ -25,6 +25,8 @@ function displayMessage(input) {
         text: input.username + ": " + input.message,
     });
     $("#message_box").append(div);
+
+    $('#message_box').scrollTop($('#message_box')[0].scrollHeight);
 }
 
 function displayText(text) {
@@ -32,6 +34,8 @@ function displayText(text) {
         text: text
     });
     $("#message_box").append(div);
+
+    $('#message_box').scrollTop($('#message_box')[0].scrollHeight);
 }
 
 function login(username) {

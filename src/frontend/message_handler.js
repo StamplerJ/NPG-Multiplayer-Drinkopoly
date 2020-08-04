@@ -13,8 +13,11 @@ function handleMessage(message) {
         case "category":
             onCategory(value);
             break;
-        case "category":
-            onCategory(value);
+        case "drink":
+            onDrink(value);
+            break;
+        case "shot":
+            onShot(value);
             break;
         default:
             onChatMessage(value);
@@ -33,6 +36,16 @@ function onLogin(value) {
 function onBoardTurn(value) {
     displayText(value.username + " hat eine " + value.dice + " gewürfelt.");
     boardTurn(value);
+}
+
+function onDrink(value) {
+    let current = +($("#drinkValue").text());
+    $("#drinkValue").text(current + value.amount);
+}
+
+function onShot(value) {
+    let current = +($("#shotValue").text());
+    $("#shotValue").text(current + value.amount);
 }
 
 function onCategory(value) {

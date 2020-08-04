@@ -64,7 +64,7 @@ class MessageHandler
         // Select game of new field
         $game = $this->gameManager->findField($destinationFieldIndex)->getGame();
         if($game != null) {
-            $this->gameManager->handleGame($game, $boardTurn->getUsername());
+            $this->gameManager->handleGame($game, $client);
         }
 
         // Send new field positions to all players

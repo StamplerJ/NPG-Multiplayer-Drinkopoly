@@ -52,10 +52,13 @@ class GameManager
 
     }
 
-    public function handleGame($game, $username) {
+    public function handleGame($game, $client) {
         switch ($game) {
             case Games::DRINK:
-                $this->sendDrink($username);
+                $this->sendDrink($client);
+                break;
+            case Games::SHOT:
+                $this->sendShot($client);
                 break;
             case Games::CATEGORY:
 
@@ -64,13 +67,22 @@ class GameManager
         }
     }
 
-    public function sendDrink($username) {
+    public function sendDrink($client) {
         $message = array('type' => 'drink',
             'value' => array(
-                "username" => $username,
+                "username" => $client->getUsername(),
                 "amount" => 1
             ));
-        $this->server->sendMessageToAllClients($message);
+        $this->server->sendMessage($client->getSocket(), $message);
+    }
+
+    public function sendShot($client) {
+        $message = array('type' => 'shot',
+            'value' => array(
+                "username" => $client->getUsername(),
+                "amount" => 1
+            ));
+        $this->server->sendMessage($client->getSocket(), $message);
     }
 
     public function createPlayer($username) {

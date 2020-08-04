@@ -13,8 +13,10 @@ class Field {
     }
 
     draw(context) {
+        context.fillStyle = "#ffffff";
         context.strokeRect(this.x, this.y , this.width, this.height);
 
+        context.fillStyle = "#2f4f4f";
         context.textAlign = "center";
         let lines = this.getLines(context, this.text, this.width);
         for (let i = 0; i < lines.length; i++) {
