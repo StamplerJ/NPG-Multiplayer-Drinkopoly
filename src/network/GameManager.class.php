@@ -56,6 +56,9 @@ class GameManager
             case Games::SHOTANDDRINK:
                 // TODO: Game handling implementieren
                 break;
+            case Games::CATEGORY:
+
+                break;
             default:
         }
     }
@@ -95,7 +98,8 @@ class GameManager
     }
 
     public function selectGameMaster() {
-        return $this->players[Math.floor(Math.random() * players.length)].name;
+        $random_key = array_rand($this->players, 1);
+        return $this->players[$random_key[0]];
     }
 
     public function getNeverEverData() {

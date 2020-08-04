@@ -54,7 +54,7 @@
             </div>
             <div id="chat" class="border rounded flex-grow-1">
                 <h4>Chat:</h4>
-                <div id="message_box">
+                <div id="message_box" style="overflow-y: scroll; height: 300px">
                 </div>
             </div>
             <input id="message" type="text" width="100%"/>
