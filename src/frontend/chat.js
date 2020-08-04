@@ -27,6 +27,13 @@ function displayMessage(input) {
     $("#message_box").append(div);
 }
 
+function displayText(text) {
+    const div = $('<div />', {
+        text: text
+    });
+    $("#message_box").append(div);
+}
+
 function login(username) {
     let obj = {
         "type": "login",

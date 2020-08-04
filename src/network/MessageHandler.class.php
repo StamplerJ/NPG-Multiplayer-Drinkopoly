@@ -16,7 +16,7 @@ class MessageHandler
     public function __construct(Server $server)
     {
         $this->server = $server;
-        $this->gameManager = new GameManager();
+        $this->gameManager = new GameManager($server);
     }
 
     public function handleMessage($client, $message)
@@ -31,7 +31,6 @@ class MessageHandler
                 $this->login($client, $value);
                 break;
             case "board_turn":
-                echo "board_turn";
                 $this->rollDice($client, $value);
                 break;
             case "category":
@@ -63,7 +62,10 @@ class MessageHandler
         $boardTurn->setPlayerPositions($players);
 
         // Select game of new field
-        $game = $this->gameManager->getFields()[$destinationFieldIndex]->getGame();
+        $game = $this->gameManager->findField($destinationFieldIndex)->getGame();
+        if($game != null) {
+            $this->gameManager->handleGame($game, $boardTurn->getUsername());
+        }
 
         // Send new field positions to all players
         $message = array('type' => 'board_turn',
@@ -126,13 +128,13 @@ class MessageHandler
 
         $players = $this->gameManager->getPlayers();
         foreach ($this->gameManager->getPlayers() as $key => &$player) {
-            if($player->getName() === $username) {
+            if($player->getName() == $username) {
                 $indexToDelete = $key;
                 break;
             }
         }
 
-        if($indexToDelete != null) {
+        if($indexToDelete !== null) {
             unset($players[$indexToDelete]);
             $this->gameManager->setPlayers($players);
         }

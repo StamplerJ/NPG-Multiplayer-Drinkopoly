@@ -5,6 +5,7 @@ $(document).ready(function () {
 });
 
 function initializePlayers(playersData) {
+    players.length = 0;
     for (let i = 0; i < playersData.length; i++) {
         let data = playersData[i];
         let player = new Player(data.name, data.fieldIndex, data.color);
@@ -17,6 +18,7 @@ function initializePlayers(playersData) {
 function drawPlayers(fields) {
     for (let i = 0; i < players.length; i++) {
         let field = fields[players[i].fieldIndex];
+
         let radius = field.width / 8;
 
         players[i].draw(context,
@@ -27,6 +29,7 @@ function drawPlayers(fields) {
 }
 
 function addToPlayerList(player) {
+    $("#playerlist").empty();
     let ul = document.getElementById("playerlist");
     let li = document.createElement("li");
     li.appendChild(document.createTextNode(player.name));

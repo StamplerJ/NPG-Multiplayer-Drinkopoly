@@ -13,6 +13,9 @@ function handleMessage(message) {
         case "category":
             onCategory(value);
             break;
+        case "category":
+            onCategory(value);
+            break;
         default:
             onChatMessage(value);
     }
@@ -28,6 +31,7 @@ function onLogin(value) {
 }
 
 function onBoardTurn(value) {
+    displayText(value.username + " hat eine " + value.dice + " gewürfelt.");
     boardTurn(value);
 }
 

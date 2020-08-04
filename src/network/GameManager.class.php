@@ -9,31 +9,32 @@ class GameManager
 {
     public static $FIELD_COUNT = 20;
 
+    private $server;
+
     private $fields;
     private $players;
     private $categories;
     private $neverEverQuestions;
 
-    public function __construct()
+    public function __construct($server)
     {
+        $this->server = $server;
+
         $this->fields = array();
         $this->fields[] = new BoardField(0, "Start", "");
         $this->fields[] = new BoardField(2, "Tic Tac Toe", Games::TICTACTOE);
-        $this->fields[] = new BoardField(3, "Drink (1)", Games::SHOTANDDRINK);
-        $this->fields[] = new BoardField(4, "Shot (1)", Games::SHOTANDDRINK);
+        $this->fields[] = new BoardField(3, "Drink", Games::DRINK);
+        $this->fields[] = new BoardField(4, "Shot", Games::SHOT);
         $this->fields[] = new BoardField(6, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
-        $this->fields[] = new BoardField(8, "Shot (1)", Games::SHOTANDDRINK);
+        $this->fields[] = new BoardField(8, "Shot", Games::SHOT);
         $this->fields[] = new BoardField(9, "Pong", Games::PONG);
-        $this->fields[] = new BoardField(11, "Drink (1)", Games::SHOTANDDRINK);
+        $this->fields[] = new BoardField(11, "Drink", Games::DRINK);
         $this->fields[] = new BoardField(13, "Never Have I Ever", Games::NEVEREVER);
-        $this->fields[] = new BoardField(14, "Drink (1)", Games::SHOTANDDRINK);
-        $this->fields[] = new BoardField(16, "Shot (1)", Games::SHOTANDDRINK);
+        $this->fields[] = new BoardField(14, "Drink", Games::DRINK);
+        $this->fields[] = new BoardField(16, "Shot", Games::SHOT);
         $this->fields[] = new BoardField(19, "Category", Games::CATEGORY);
 
         $this->players = array();
-        $this->players[] = new Player("Player1", 0, "#ff0011");
-        $this->players[] = new Player("Player2", 0, "#33ff11");
-        $this->players[] = new Player("Player3", 2, "#3344e1");
 
         $this->categories = array();
         $this->categories[] = "Autos";
@@ -51,13 +52,22 @@ class GameManager
 
     }
 
-    public function handleGame($game) {
+    public function handleGame($game, $username) {
         switch ($game) {
-            case Games::SHOTANDDRINK:
-                // TODO: Game handling implementieren
+            case Games::DRINK:
+                $this->sendDrink($username);
                 break;
             default:
         }
+    }
+
+    public function sendDrink($username) {
+        $message = array('type' => 'drink',
+            'value' => array(
+                "username" => $username,
+                "amount" => 1
+            ));
+        $this->server->sendMessageToAllClients($message);
     }
 
     public function createPlayer($username) {
@@ -105,6 +115,14 @@ class GameManager
             $data[] = $neverEver->getData();
 
         return $data;
+    }
+
+    public function findField($fieldIndex) {
+        foreach ($this->fields as $field) {
+            if($fieldIndex == $field->getIndex())
+                return $field;
+        }
+        return new BoardField($fieldIndex, "", "");
     }
 
     public function getFields()

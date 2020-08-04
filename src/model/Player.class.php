@@ -25,8 +25,11 @@ class Player
     public function addSteps($steps) {
         $this->fieldIndex += $steps;
 
-        if($this->fieldIndex >= GameManager::$FIELD_COUNT)
+        if($this->fieldIndex >= GameManager::$FIELD_COUNT) {
+            echo $this->fieldIndex;
             $this->fieldIndex -= GameManager::$FIELD_COUNT;
+            echo $this->fieldIndex;
+        }
     }
 
     public function getName()

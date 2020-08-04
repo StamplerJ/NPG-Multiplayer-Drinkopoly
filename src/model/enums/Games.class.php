@@ -9,5 +9,6 @@ class Games
     const NEVEREVER         = "neverever";
     const PONG              = "pong";
     const ROCKPAPERSCISSORS = "rockpaperscissors";
-    const SHOTANDDRINK      = "shotanddrink";
+    const SHOT              = "shot";
+    const DRINK             = "drink";
 }
