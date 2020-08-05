@@ -102,20 +102,7 @@ class Server
 
                 if ($end)
                 {
-                    echo "Verbindung zu " . $clientIP . "  beendet \n";
-
-                    $index = array_search($client, $this->clients);
-
-                    //Alle anderen Clients informieren:
-                    $msg = array('username' => 'Server', 'message' => "User " . $this->clients[$index]->getUsername() . "  disconnected");
-                    $jsonText = json_encode($msg);
-                    send_message($this->clients, mask($jsonText));
-
-                    $this->messageHandler->removePlayer($this->clients[$index]->getUsername());
-
-                    // Remove socket
-                    socket_close($client->getSocket());
-                    unset($this->clients[$index]);
+                    $this->removeSocket($clientIP, $client);
                 }
                 else
                 {
@@ -156,21 +143,49 @@ class Server
 
         echo "Client " . $clientIP . " connected \n";
 
-        $msg = array('type' => 'chat',
-            'value' => array(
-                'username' => $this->SERVER_USERNAME,
-                'message' => "Verbindung erfolgreich!"
-            ));
-        $this->sendMessage($socket, $msg);
+//        $msg = array('type' => 'chat',
+//            'value' => array(
+//                'username' => $this->SERVER_USERNAME,
+//                'message' => "Verbindung erfolgreich!"
+//            ));
+//        $this->sendMessage($socket, $msg);
+//
+//        $msg = array('type' => 'chat',
+//            'value' => array(
+//                'username' => $this->SERVER_USERNAME,
+//                'message' => "Hallo ".$clientIP. ", herzlich willkommen!"
+//            ));
+//        $this->sendMessage($socket, $msg);
+//
+//        //Alle anderen Clients informieren:
+//        $this->sendTextToAllClients($this->SERVER_USERNAME, "Neuer Client ".$clientIP." verbunden");
+    }
 
-        $msg = array('type' => 'chat',
-            'value' => array(
-                'username' => $this->SERVER_USERNAME,
-                'message' => "Hallo ".$clientIP. ", herzlich willkommen!"
-            ));
-        $this->sendMessage($socket, $msg);
+    private function removeSocket($clientIP, $client) {
+        echo "Verbindung zu " . $clientIP . "  beendet \n";
+
+        $index = array_search($client, $this->clients);
 
         //Alle anderen Clients informieren:
-        $this->sendTextToAllClients($this->SERVER_USERNAME, "Neuer Client ".$clientIP." verbunden");
+        $msg = array('username' => 'Server', 'message' => "User " . $this->clients[$index]->getUsername() . "  disconnected");
+        $jsonText = json_encode($msg);
+        send_message($this->clients, mask($jsonText));
+
+        $this->messageHandler->removePlayer($this->clients[$index]->getUsername());
+
+        // Remove socket
+        socket_close($client->getSocket());
+        unset($this->clients[$index]);
+        $this->clients = array_values($this->clients);
+    }
+
+    public function getClients()
+    {
+        return $this->clients;
+    }
+
+    public function setClients($clients)
+    {
+        $this->clients = $clients;
     }
 }

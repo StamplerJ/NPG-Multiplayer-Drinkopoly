@@ -24,6 +24,17 @@ function rollDice(username) {
     websocket.send(JSON.stringify(obj));
 }
 
+function sendReady() {
+    let obj = {
+        "type": "ready",
+        value: {
+            "ready": true
+        }
+    };
+
+    websocket.send(JSON.stringify(obj));
+}
+
 function sendCategoryAnswer(answer) {
     let obj = {
         "type": "category",

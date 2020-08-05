@@ -6,6 +6,7 @@ class Player
     private $name;
     private $fieldIndex;
     private $color;
+    private $ready;
 
     public function __construct($name, $fieldIndex, $color)
     {
@@ -58,5 +59,15 @@ class Player
     public function setColor($color)
     {
         $this->color = $color;
+    }
+
+    public function getReady()
+    {
+        return $this->ready;
+    }
+
+    public function setReady($ready)
+    {
+        $this->ready = $ready;
     }
 }

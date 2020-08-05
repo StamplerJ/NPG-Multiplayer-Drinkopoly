@@ -6,6 +6,7 @@ $(document).ready(function () {
 
 function initializePlayers(playersData) {
     players.length = 0;
+    $("#playerlist").empty();
     for (let i = 0; i < playersData.length; i++) {
         let data = playersData[i];
         let player = new Player(data.name, data.fieldIndex, data.color);
@@ -29,7 +30,6 @@ function drawPlayers(fields) {
 }
 
 function addToPlayerList(player) {
-    $("#playerlist").empty();
     let ul = document.getElementById("playerlist");
     let li = document.createElement("li");
     li.appendChild(document.createTextNode(player.name));

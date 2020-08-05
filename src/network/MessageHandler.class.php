@@ -30,6 +30,9 @@ class MessageHandler
                 $client->setUsername($value->username);
                 $this->login($client, $value);
                 break;
+            case "ready":
+                $this->ready($client, $value);
+                break;
             case "board_turn":
                 $this->rollDice($client, $value);
                 break;
@@ -72,14 +75,39 @@ class MessageHandler
             'value' => array(
                 "username" => $boardTurn->getUsername(),
                 "dice" => $boardTurn->getDice(),
-                "player_positions" => $boardTurn->getPlayerPositionsData()
+                "player_positions" => $boardTurn->getPlayerPositionsData(),
+                "nextPlayer" => $this->gameManager->getNextPlayer()
             ));
         $this->server->sendMessageToAllClients($message);
     }
 
     public function login($client, $value)
     {
+        // Deny access if lobby is full (4 players) or game is already started
+        if(count($this->gameManager->getPlayers()) >= 4 || $this->gameManager->isGameStarted()) {
+            $message = array('type' => 'login',
+                'value' => array(
+                    'successful' => false,
+                    'message' => "Die Lobby ist voll oder das Spiel ist bereits gestartet.",
+                ));
+            $this->server->sendMessage($client->getSocket(), $message);
+
+            return;
+        }
         $login = new Login($value);
+
+        // Check if username is already taken
+        foreach($this->gameManager->getPlayers() as $player) {
+            if($player->getName() === $login->getUsername()) {
+                $message = array('type' => 'login',
+                    'value' => array(
+                        'successful' => false,
+                        'message' => "Der Benutzername wird bereits verwendet.",
+                    ));
+                $this->server->sendMessage($client->getSocket(), $message);
+                return;
+            }
+        }
 
         $player = $this->gameManager->createPlayer($login->getUsername());
         $client->setPlayer($player);
@@ -95,6 +123,34 @@ class MessageHandler
                 'players' => $this->gameManager->getPlayersData()
             ));
         $this->server->sendMessage($client->getSocket(), $message);
+    }
+
+    public function ready($client, $value)
+    {
+        $client->getPlayer()->setReady(true);
+
+        $message = array('type' => 'ready',
+            'value' => array(
+                'username' => $client->getUsername()
+            ));
+        $this->server->sendMessageToAllClients($message);
+
+        // Check if everyone is ready
+        $everyoneReady = true;
+        foreach ($this->gameManager->getPlayers() as $player) {
+            if (!$player->getReady()) {
+                $everyoneReady = false;
+                break;
+            }
+        }
+
+        if($everyoneReady) {
+            $message = array('type' => 'startGame',
+                'value' => array(
+                    'start' => true
+                ));
+            $this->server->sendMessageToAllClients($message);
+        }
     }
 
     public function playCategoryGame($value) {
