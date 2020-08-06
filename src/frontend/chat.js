@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     $("#message").keypress(function (event) {
         let keycode = (event.keyCode ? event.keyCode : event.which);
-        if (keycode == '13') {
+        if (keycode == '13' && !$("#sendMessage").hasClass("d-none")) {
             $("#sendMessage").click();
         }
     });
@@ -73,4 +73,14 @@ function setupWebsocket() {
     websocket.onclose = function(ev) {
         displayMessage({ type: 'exit' });
     };
+}
+
+function toggleButton(button, state)
+{
+    if(state)
+        $(button).removeClass("d-none");
+    else
+        $(button).addClass("d-none");
+
+    $(button).prop('disabled', state);
 }

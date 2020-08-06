@@ -61,8 +61,9 @@ function onReady(value) {
 
 function onStartGame(value) {
     displayText("Das Spiel startet jetzt und " + value.username + " beginnt");
-    $("#ready").addClass("d-none");
-    $("#dice").removeClass("d-none");
+
+    toggleButton("#ready", false);
+    toggleButton("#dice", true);
 
     if(username === value.username)
         $('#dice').prop('disabled', false);
@@ -107,14 +108,14 @@ function onCategory(value) {
     {
         displayText(value.username + " hat das Category-Game gestartet!");
         displayText("Nenne Begriffe zur Kategorie: " + value.category);
-        displayAnswer(value.message);
-        //distributeCategory(value.category);
-        $("#sendMessage").addClass("d-none");
-        $("#sendAnswer").removeClass("d-none");
+        $("#dice").addClass("d-none");
+
+        toggleButton("#sendMessage", false);
+        toggleButton("#sendAnswer", true);
 
         if(value.isGameMaster == username)
         {
-            gameManager();
+            gameMaster();
         }
     }
 

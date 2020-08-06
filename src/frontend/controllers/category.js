@@ -1,7 +1,3 @@
-const wsUri = "ws://ux-113.pb.bib.de:22408";
-let websocket;
-let username;
-
 $(document).ready(function () {
     $("#sendAnswer").click(function () {
         let message = $("#message").val();
@@ -15,21 +11,14 @@ $(document).ready(function () {
 
     $("#message").keypress(function (event) {
         let keycode = (event.keyCode ? event.keyCode : event.which);
-        if (keycode == '13') {
+        if (keycode == '13' && !$("#sendMessage").hasClass("d-none")) {
             $("#sendAnswer").click();
         }
     });
 });
 
-function displayAnswer(input) {
-    console.log(input)
-    const div = $('<div />', {
-        text: input.username + ": " + input.message,
-    });
-    $("#message_box").append(div);
-}
-
-function gameManager() {
+function gameMaster() {
+    console.log("gameMaster setup");
     $("#voteYes").removeClass("d-none");
     $("#voteNo").removeClass("d-none");
 

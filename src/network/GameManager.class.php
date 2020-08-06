@@ -28,9 +28,9 @@ class GameManager
         $this->fields[] = new BoardField(2, "Tic Tac Toe", Games::TICTACTOE);
         $this->fields[] = new BoardField(3, "Drink", Games::DRINK);
         $this->fields[] = new BoardField(4, "Shot", Games::SHOT);
-        $this->fields[] = new BoardField(5, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
-        $this->fields[] = new BoardField(6, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
-        $this->fields[] = new BoardField(7, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
+        $this->fields[] = new BoardField(5, "Rock Paper Scissors", Games::CATEGORY);
+        $this->fields[] = new BoardField(6, "Rock Paper Scissors", Games::CATEGORY);
+        $this->fields[] = new BoardField(7, "Rock Paper Scissors", Games::CATEGORY);
         $this->fields[] = new BoardField(8, "Shot", Games::SHOT);
         $this->fields[] = new BoardField(9, "Pong", Games::PONG);
         $this->fields[] = new BoardField(11, "Drink", Games::DRINK);
@@ -67,7 +67,7 @@ class GameManager
                 $this->sendShot($client);
                 break;
             case Games::ROCKPAPERSCISSORS:
-                $this->startRockPaperScissors($client);
+//                $this->startRockPaperScissors($client);
                 break;
             case Games::CATEGORY:
                 $this->playCategoryGame($client);
@@ -172,7 +172,7 @@ class GameManager
 
     public function getCategoryData() {
         $random_key = array_rand($this->categories, 1);
-        return $this->categories[$random_key[0]];
+        return $this->categories[$random_key];
     }
 
     public function selectGameMaster() {

@@ -1,7 +1,3 @@
-const wsUri = "ws://ux-113.pb.bib.de:22408";
-let websocket;
-let username;
-
 $(document).ready(function () {
     $("#voteYes").removeClass("d-none");
     $("#voteNo").removeClass("d-none");

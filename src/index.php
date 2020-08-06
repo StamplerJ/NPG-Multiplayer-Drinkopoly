@@ -21,6 +21,8 @@
     <script src="frontend/message_sender.js"></script>
     <script src="frontend/controllers/game_board.js"></script>
     <script src="frontend/controllers/players.js"></script>
+    <script src="frontend/controllers/category.js"></script>
+    <script src="frontend/controllers/never_ever.js"></script>
 </head>
 <body>
 
