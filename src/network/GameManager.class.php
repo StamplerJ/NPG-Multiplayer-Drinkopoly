@@ -99,6 +99,7 @@ class GameManager
     }
 
     public function sendShot($client) {
+        print_r($client);
         $message = array('type' => 'shot',
             'value' => array(
                 "username" => $client->getUsername(),
@@ -123,13 +124,13 @@ class GameManager
     }
 
 
-    public function playCategoryGame($username) {
+    public function playCategoryGame($client) {
         $message = array('type' => 'category',
             'value' => array(
-                "username" => $username,
+                "username" => $client->getUsername(),
                 "category" => $this->getCategoryData(),
-                "isGameMaster" => $username,
-                "nextPlayer" => $this->getNextPlayer()
+                "isGameMaster" => $client->getUsername(),
+                "nextPlayer" => $this->getCurrentPlayer()
             ));
         $this->server->sendMessageToAllClients($message);
     }
@@ -204,6 +205,25 @@ class GameManager
 
         if($this->currentPlayerIndex >= count($this->players))
             $this->currentPlayerIndex = 0;
+
+        if($this->players[$this->currentPlayerIndex] !== null)
+            return $this->players[$this->currentPlayerIndex]->getName();
+    }
+
+    public function getCurrentPlayer() {
+        $this->players = array_values($this->players);
+
+        if($this->players[$this->currentPlayerIndex] !== null)
+            return $this->players[$this->currentPlayerIndex]->getName();
+    }
+
+    public function getLastPlayer() {
+        $this->players = array_values($this->players);
+
+        $this->currentPlayerIndex--;
+
+        if($this->currentPlayerIndex < 0)
+            $this->currentPlayerIndex = count($this->players) - 1;
 
         if($this->players[$this->currentPlayerIndex] !== null)
             return $this->players[$this->currentPlayerIndex]->getName();

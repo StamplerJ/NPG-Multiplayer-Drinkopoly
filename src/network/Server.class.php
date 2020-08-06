@@ -184,6 +184,14 @@ class Server
         }
     }
 
+    public function findClient($username) {
+        foreach ($this->clients as $client) {
+            if($client->getUsername() == $username)
+                return $client;
+        }
+        $this->clients[0];
+    }
+
     public function getClients()
     {
         return $this->clients;

@@ -82,5 +82,5 @@ function toggleButton(button, state)
     else
         $(button).addClass("d-none");
 
-    $(button).prop('disabled', state);
+    $(button).prop('disabled', !state);
 }
