@@ -30,14 +30,6 @@ function initializeBoard(fieldsData) {
 }
 
 function boardTurn(value) {
-    // let playerPositions = value.player_positions;
-    // players.forEach(player => {
-    //     playerPositions.forEach(pos =>  {
-    //         if(player.name === pos.name) {
-    //             player.fieldIndex = pos.fieldIndex;
-    //         }
-    //     });
-    // });
     initializePlayers(value.player_positions);
     drawBoard();
 }
