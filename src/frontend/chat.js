@@ -22,7 +22,6 @@ $(document).ready(function () {
 });
 
 function displayMessage(input) {
-    console.log(input)
     const div = $('<div />', {
         text: input.username + ": " + input.message,
     });

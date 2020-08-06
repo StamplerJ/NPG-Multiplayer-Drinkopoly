@@ -9,11 +9,11 @@ class Game
 
     public function __construct($value)
     {
-        $this->username = $value->username;
-        $this->time = $value->time;
-        $this->message = $value->message;
-        $this->turn = $value->turn;
-        $this->finished = $value->finished;
+        $this->username = isset($value->username) ? $value->username : "";
+        $this->time = isset($value->time) ? $value->time : "";
+        $this->message = isset($value->message) ? $value->message : "";
+        $this->turn = isset($value->turn) ? $value->turn : "";
+        $this->finished = isset($value->finished) ? $value->finished : "";
     }
 
     public function getUsername()

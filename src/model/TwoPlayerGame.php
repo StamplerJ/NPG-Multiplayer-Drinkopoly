@@ -1,4 +1,7 @@
 <?php
+
+require_once(__DIR__."/../model/Game.class.php");
+
 class TwoPlayerGame extends Game
 {
     protected $playerOne;
@@ -12,12 +15,12 @@ class TwoPlayerGame extends Game
     {
         parent::__construct($value);
 
-        $this->playerOne = $value->playerOne;
-        $this->playerTwo = $value->playerTwo;
-        $this->playerOnePosition = $value->playerOnePosition;
-        $this->playerTwoPosition = $value->playerTwoPosition;
-        $this->winner = $value->winner;
-        $this->score = $value->score;
+        $this->playerOne = isset($value->playerOne) ? $value->playerOne : "";
+        $this->playerTwo = isset($value->playerTwo) ? $value->playerTwo : "";
+        $this->playerOnePosition = isset($value->playerOnePosition) ? $value->playerOnePosition : "";
+        $this->playerTwoPosition = isset($value->playerTwoPosition) ? $value->playerTwoPosition : "";
+        $this->winner = isset($value->winner) ? $value->winner : "";
+        $this->score = isset($value->score) ? $value->score : "";
     }
 
     public function getTime()

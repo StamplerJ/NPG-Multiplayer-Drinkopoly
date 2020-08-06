@@ -115,6 +115,16 @@ class Server
         }
     }
 
+    public function sendText($client, $text) {
+        $message = array('type' => 'chat',
+            'value' => array(
+                'username' => $client->getUsername(),
+                'message' => $text
+            ));
+
+        $this->sendMessage($client->getSocket(), $message);
+    }
+
     public function sendTextToAllClients($username, $text) {
         $message = array('type' => 'chat',
                 'value' => array(

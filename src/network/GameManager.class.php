@@ -3,6 +3,7 @@
 require_once("Server.class.php");
 require_once(__DIR__."/../model/BoardField.class.php");
 require_once(__DIR__."/../model/Player.class.php");
+require_once(__DIR__."/../model/RockPaperScissors.class.php");
 require_once(__DIR__."/../model/enums/Games.class.php");
 
 class GameManager
@@ -19,6 +20,8 @@ class GameManager
     private $currentPlayerIndex;
     private $gameStarted;
 
+    private $rockPaperScissors;
+
     public function __construct($server)
     {
         $this->server = $server;
@@ -28,9 +31,9 @@ class GameManager
         $this->fields[] = new BoardField(2, "Tic Tac Toe", Games::TICTACTOE);
         $this->fields[] = new BoardField(3, "Drink", Games::DRINK);
         $this->fields[] = new BoardField(4, "Shot", Games::SHOT);
-        $this->fields[] = new BoardField(5, "Rock Paper Scissors", Games::CATEGORY);
-        $this->fields[] = new BoardField(6, "Rock Paper Scissors", Games::CATEGORY);
-        $this->fields[] = new BoardField(7, "Rock Paper Scissors", Games::CATEGORY);
+        $this->fields[] = new BoardField(5, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
+        $this->fields[] = new BoardField(6, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
+        $this->fields[] = new BoardField(7, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
         $this->fields[] = new BoardField(8, "Shot", Games::SHOT);
         $this->fields[] = new BoardField(9, "Pong", Games::PONG);
         $this->fields[] = new BoardField(11, "Drink", Games::DRINK);
@@ -67,7 +70,7 @@ class GameManager
                 $this->sendShot($client);
                 break;
             case Games::ROCKPAPERSCISSORS:
-//                $this->startRockPaperScissors($client);
+                $this->startRockPaperScissors($client);
                 break;
             case Games::CATEGORY:
                 $this->playCategoryGame($client);
@@ -80,11 +83,24 @@ class GameManager
     }
 
     public function startRockPaperScissors($client) {
+        if(count($this->players) <= 1) {
+            $this->server->sendText($client, "Zu wenig Spieler, trinke einen Shot!");
+            $this->sendShot($client);
+            return;
+        }
+
+        $value = (object) array(
+            "playerOne" => $client->getUsername(),
+            "playerTwo" => $this->getRandomPlayer($client->getPlayer())->getName()
+        );
+
+        $this->rockPaperScissors = new RockPaperScissors($value);
+
         $message = array('type' => Games::ROCKPAPERSCISSORS,
             'value' => array(
                 "message" => "Wir spielen Schere, Stein, Papier!",
-                "playerOne" => $client->getUsername(),
-                "playerTwo" => $this->getRandomPlayer($client->getPlayer())
+                "playerOne" => $this->rockPaperScissors->getPlayerOne(),
+                "playerTwo" => $this->getRandomPlayer($client->getPlayer())->getName()
         ));
         $this->server->sendMessageToAllClients($message);
     }
@@ -99,7 +115,6 @@ class GameManager
     }
 
     public function sendShot($client) {
-        print_r($client);
         $message = array('type' => 'shot',
             'value' => array(
                 "username" => $client->getUsername(),
@@ -114,7 +129,8 @@ class GameManager
         $message = array('type' => 'startGame',
             'value' => array(
                 'start' => true,
-                'username' => $this->players[$this->currentPlayerIndex]->getName()
+                'username' => $this->players[$this->currentPlayerIndex]->getName(),
+                "message" => "Das Spiel startet jetzt und " . $this->players[$this->currentPlayerIndex]->getName() . " beginnt"
             ));
         $this->server->sendMessageToAllClients($message);
     }
@@ -235,14 +251,22 @@ class GameManager
 
         $exclude = array($except);
         $data = $this->players;
+
         $diff = array_udiff($data, $exclude,
             function ($obj_a, $obj_b) {
-                return $obj_a->getName() === $obj_b->getName();
+                if ($obj_a->getName() === $obj_b->getName())
+                    return 0;
+                else
+                    return -1;
             }
         );
 
         $excluded_data = array_values($diff);
         $rand = rand(0,count($excluded_data)-1);
+
+        if($rand == -1)
+            return $excluded_data[0];
+
         return $excluded_data[$rand];
     }
 
@@ -274,5 +298,15 @@ class GameManager
     public function setGameStarted($gameStarted)
     {
         $this->gameStarted = $gameStarted;
+    }
+
+    public function setRockPaperScissors($rockPaperScissors)
+    {
+        $this->rockPaperScissors = $rockPaperScissors;
+    }
+
+    public function getRockPaperScissors()
+    {
+        return $this->rockPaperScissors;
     }
 }

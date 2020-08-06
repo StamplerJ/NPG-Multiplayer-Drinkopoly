@@ -59,3 +59,15 @@ function sendNeverEverAnswer(answer) {
 
     websocket.send(JSON.stringify(obj));
 }
+
+function sendRockPaperScissors(answer) {
+    let obj = {
+        "type": "rockpaperscissors",
+        value: {
+            "username": username,
+            "answer": answer
+        }
+    };
+
+    websocket.send(JSON.stringify(obj));
+}

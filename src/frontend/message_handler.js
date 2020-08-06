@@ -2,6 +2,8 @@ function handleMessage(message) {
     let type = message.type;
     let value = message.value;
 
+    console.log(message);
+
     switch (type)
     {
         case "login":
@@ -60,7 +62,10 @@ function onReady(value) {
 }
 
 function onStartGame(value) {
-    displayText("Das Spiel startet jetzt und " + value.username + " beginnt");
+
+    if(value.message != null) {
+        displayText(value.message);
+    }
 
     toggleButton("#ready", false);
     toggleButton("#dice", true);
@@ -69,6 +74,9 @@ function onStartGame(value) {
         $('#dice').prop('disabled', false);
     else
         $('#dice').prop('disabled', true);
+
+    $('#board').removeClass("d-none");
+    $('#rockpaperscissors').addClass("d-none");
 }
 
 function onUpdatePlayers(value) {
@@ -128,7 +136,11 @@ function onNeverEver(value) {
 }
 
 function onRockPaperScissors(value) {
-    displayMessage(value.message);
+    displayText(value.message);
+
+    toggleButton("#dice", false);
+
+    $("#board").addClass("d-none");
 
     $("#rockpaperscissors").removeClass("d-none");
     $("#rockpaperscissors #left #name").text(value.playerOne);
@@ -136,10 +148,10 @@ function onRockPaperScissors(value) {
 
 
     if(username == value.playerOne) {
-
+        toggleButton("#rockpaperscissors #left #leftButtons", true)
     }
 
     if(username == value.playerTwo) {
-
+        toggleButton("#rockpaperscissors #right #rightButtons", true)
     }
 }

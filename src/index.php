@@ -23,6 +23,7 @@
     <script src="frontend/controllers/players.js"></script>
     <script src="frontend/controllers/category.js"></script>
     <script src="frontend/controllers/never_ever.js"></script>
+    <script src="frontend/controllers/rock_paper_scissors.js"></script>
 </head>
 <body>
 
@@ -60,19 +61,25 @@
             </canvas>
         </div>
         <div id="rockpaperscissors" class="col-lg-8 col-12 text-center d-none">
-            <div id="left" class="">
-                <h2 id="name">Spieler Eins</h2>
-                <h3 id="answer">Warte auf Auswahl...</h3>
-                <input id="leftScissors" type="button" value="Schere"/>
-                <input id="leftRock" type="button" value="Stein"/>
-                <input id="leftPaper" type="button" value="Papier"/>
-            </div>
-            <div id="right" class="">
-                <h2 id="name">Spieler zwei</h2>
-                <h3 id="answer">Warte auf Auswahl...</h3>
-                <input id="rightScissors" type="button" value="Schere"/>
-                <input id="rightRock" type="button" value="Stein"/>
-                <input id="rightPaper" type="button" value="Papier"/>
+            <div class="h-100 d-flex align-items-center">
+                <div id="left" class="col-6">
+                    <h2 id="name">Spieler Eins</h2>
+                    <h3 id="answer">Warte auf Auswahl...</h3>
+                    <div id="leftButtons" class="d-none">
+                        <input id="leftScissors" class="rpsButton" type="button" value="Scissors"/>
+                        <input id="leftRock" class="rpsButton" type="button" value="Rock"/>
+                        <input id="leftPaper" class="rpsButton" type="button" value="Paper"/>
+                    </div>
+                </div>
+                <div id="right" class="col-6">
+                    <h2 id="name">Spieler zwei</h2>
+                    <h3 id="answer">Warte auf Auswahl...</h3>
+                    <div id="rightButtons" class="d-none">
+                        <input id="rightScissors" class="rpsButton" type="button" value="Scissors"/>
+                        <input id="rightRock" class="rpsButton" type="button" value="Rock"/>
+                        <input id="rightPaper" class="rpsButton" type="button" value="Paper"/>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="side" class="col-lg-4 col-12">

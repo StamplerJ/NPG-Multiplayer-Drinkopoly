@@ -37,14 +37,15 @@ class MessageHandler
                 $this->rollDice($client, $value);
                 break;
             case "category":
-//                echo "category";
                 $this->server->sendTextToAllClients($client->getUsername(), $value->message);
                 $this->categoryCheck($client, $value);
                 break;
             case "neverever":
-//                echo "neverever";
                 //$this->gameManager->playNeverEver($value);
                 $this->server->sendTextToAllClients($client->getUsername(), $value->message);
+                break;
+            case Games::ROCKPAPERSCISSORS:
+                $this->checkRockPaperScissors($client, $value);
                 break;
             default:
                 $this->server->sendTextToAllClients($client->getUsername(), $value->message);
@@ -57,7 +58,12 @@ class MessageHandler
             if($value->message == "NO")
             {
                 $this->gameManager->sendShot($this->server->findClient($this->gameManager->getCurrentPlayer()));
-                $this->server->sendTextToAllClients($client->getUsername(), "Category-Game beendet.");
+                $message = array('type' => 'startGame',
+                    'value' => array(
+                        'username' => $this->gameManager->getCurrentPlayer(),
+                        "message" => "Category-Game beendet."
+                    ));
+                $this->server->sendMessageToAllClients($message);
             }
             else
             {
@@ -67,6 +73,46 @@ class MessageHandler
                     ));
                 $this->server->sendMessageToAllClients($message);
             }
+        }
+    }
+
+    public function checkRockPaperScissors($client, $value) {
+        $rps = $this->gameManager->getRockPaperScissors();
+        if($client->getUsername() == $rps->getPlayerOne()) {
+            $rps->setHandPlayerOne($value->answer);
+        }
+        elseif($client->getUsername() == $rps->getPlayerTwo()) {
+            $rps->setHandPlayerTwo($value->answer);
+        }
+
+        $this->gameManager->setRockPaperScissors($rps);
+
+        if($rps->getFinished()) {
+            var_dump($rps->getWinner());
+            var_dump($rps->getPlayerOne());
+            var_dump($rps->getPlayerTwo());
+            if($rps->getPlayerOne() === $rps->getWinner()) {
+                $looserClient = $this->server->findClient($rps->getPlayerOne());
+                $this->server->sendTextToAllClients("Server", $looserClient->getUsername() . "hat verloren, trinke einen Shot!");
+                $this->gameManager->sendShot($looserClient);
+            }
+            elseif($rps->getPlayerTwo() === $rps->getWinner()) {
+                $looserClient = $this->server->findClient($rps->getPlayerTwo());
+                $this->server->sendTextToAllClients("Server", $looserClient->getUsername() . "hat verloren, trinke einen Shot!");
+                $this->gameManager->sendShot($looserClient);
+            }
+            else {
+                $this->server->sendTextToAllClients("Server", "Unentschieden, beide trinken einen Shot!");
+                $this->gameManager->sendShot($this->server->findClient($rps->getPlayerOne()));
+                $this->gameManager->sendShot($this->server->findClient($rps->getPlayerTwo()));
+            }
+
+            $message = array('type' => 'startGame',
+                'value' => array(
+                    'username' => $this->gameManager->getCurrentPlayer(),
+                    "message" => "RockPaperScissors-Game beendet."
+                ));
+            $this->server->sendMessageToAllClients($message);
         }
     }
 
