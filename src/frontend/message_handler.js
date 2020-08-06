@@ -39,4 +39,5 @@ function onCategory(value) {
     //TODO gamemaster (- Button, bei klick drink +1)
     displayAnswer(value);
     distributeCategory(value.category);
+
 }

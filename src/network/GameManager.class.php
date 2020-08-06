@@ -58,7 +58,10 @@ class GameManager
                 $this->sendDrink($username);
                 break;
             case Games::CATEGORY:
-
+                $this->playCategoryGame($username);
+                break;
+            case Games::NEVEREVER:
+                $this->playNeverEver($username);
                 break;
             default:
         }
@@ -69,6 +72,27 @@ class GameManager
             'value' => array(
                 "username" => $username,
                 "amount" => 1
+            ));
+        $this->server->sendMessageToAllClients($message);
+    }
+
+
+    public function playCategoryGame($username) {
+        $message = array('type' => 'category',
+            'value' => array(
+                "username" => $username,
+                "category" => $this->getCategoryData(),
+                "isGameMaster" => $this->selectGameMaster()
+                //TODO nachricht an spieler
+            ));
+        $this->server->sendMessageToAllClients($message);
+    }
+
+    public function playNeverEver($username) {
+        $message = array('type' => 'neverever',
+            'value' => array(
+                "username" => $username,
+                "question" => $this->getNeverEverData()
             ));
         $this->server->sendMessageToAllClients($message);
     }
