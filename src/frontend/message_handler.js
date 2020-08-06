@@ -106,7 +106,7 @@ function onCategory(value) {
 
     if(username !== null)
     {
-        displayText(value.username + " hat das Category-Game gestartet!");
+        displayText(username + " hat das Category-Game gestartet!");
         displayText("Nenne Begriffe zur Kategorie: " + value.category);
         $("#dice").addClass("d-none");
 
