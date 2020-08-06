@@ -44,6 +44,9 @@ class MessageHandler
                 $this->server->sendTextToAllClients($client->getUsername(), $value->answer);
                 $this->neverEverCheck($client, $value);
                 break;
+            case Games::ROCKPAPERSCISSORS:
+                $this->checkRockPaperScissors($client, $value);
+                break;
             default:
                 $this->server->sendTextToAllClients($client->getUsername(), $value->message);
         }
@@ -85,9 +88,6 @@ class MessageHandler
         $this->gameManager->setRockPaperScissors($rps);
 
         if($rps->getFinished()) {
-            var_dump($rps->getWinner());
-            var_dump($rps->getPlayerOne());
-            var_dump($rps->getPlayerTwo());
             if($rps->getPlayerOne() === $rps->getWinner()) {
                 $looserClient = $this->server->findClient($rps->getPlayerOne());
                 $this->server->sendTextToAllClients("Server", $looserClient->getUsername() . "hat verloren, trinke einen Shot!");
@@ -95,7 +95,7 @@ class MessageHandler
             }
             elseif($rps->getPlayerTwo() === $rps->getWinner()) {
                 $looserClient = $this->server->findClient($rps->getPlayerTwo());
-                $this->server->sendTextToAllClients("Server", $looserClient->getUsername() . "hat verloren, trinke einen Shot!");
+                $this->server->sendTextToAllClients("Server", $looserClient->getUsername() . " hat verloren, trinke einen Shot!");
                 $this->gameManager->sendShot($looserClient);
             }
             else {

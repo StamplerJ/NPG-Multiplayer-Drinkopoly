@@ -28,19 +28,18 @@ class GameManager
 
         $this->fields = array();
         $this->fields[] = new BoardField(0, "Start", "");
-        $this->fields[] = new BoardField(2, "Tic Tac Toe", Games::TICTACTOE);
-        $this->fields[] = new BoardField(3, "Drink", Games::DRINK);
-        $this->fields[] = new BoardField(4, "Shot", Games::SHOT);
-        $this->fields[] = new BoardField(5, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
-        $this->fields[] = new BoardField(6, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
-        $this->fields[] = new BoardField(7, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
-        $this->fields[] = new BoardField(8, "Shot", Games::SHOT);
-        $this->fields[] = new BoardField(9, "Pong", Games::PONG);
+        $this->fields[] = new BoardField(1, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
+        $this->fields[] = new BoardField(2, "Shot", Games::SHOT);
+        $this->fields[] = new BoardField(4, "Never Have I Ever", Games::NEVEREVER);
+        $this->fields[] = new BoardField(5, "Drink", Games::DRINK);
+        $this->fields[] = new BoardField(7, "Shot", Games::SHOT);
+        $this->fields[] = new BoardField(9, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
         $this->fields[] = new BoardField(11, "Drink", Games::DRINK);
-        $this->fields[] = new BoardField(13, "Never Have I Ever", Games::NEVEREVER);
-        $this->fields[] = new BoardField(14, "Drink", Games::DRINK);
-        $this->fields[] = new BoardField(16, "Shot", Games::SHOT);
-        $this->fields[] = new BoardField(19, "Category", Games::CATEGORY);
+        $this->fields[] = new BoardField(12, "Category", Games::CATEGORY);
+        $this->fields[] = new BoardField(14, "Shot", Games::SHOT);
+        $this->fields[] = new BoardField(16, "Category", Games::CATEGORY);
+        $this->fields[] = new BoardField(18, "Never Have I Ever", Games::NEVEREVER);
+        $this->fields[] = new BoardField(19, "Drink", Games::DRINK);
 
         $this->players = array();
         $this->gameStarted = false;

@@ -3,6 +3,7 @@ $(document).ready(function () {
 });
 
 function neverEverButtons() {
+    console.log("BUttons an");
     toggleButton("#voteYes", true);
     toggleButton("#voteNo", true);
 
