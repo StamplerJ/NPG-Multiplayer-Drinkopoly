@@ -10,6 +10,9 @@ function handleMessage(message) {
         case "ready":
             onReady(value);
             break;
+        case "updatePlayers":
+            onUpdatePlayers(value);
+            break;
         case "startGame":
             onStartGame(value);
             break;
@@ -24,6 +27,9 @@ function handleMessage(message) {
             break;
         case "shot":
             onShot(value);
+            break;
+        case "rockpaperscissors":
+            onUpdatePlayers(value);
             break;
         default:
             onChatMessage(value);
@@ -51,9 +57,18 @@ function onReady(value) {
 }
 
 function onStartGame(value) {
-    displayText("Das Spiel startet jetzt");
+    displayText("Das Spiel startet jetzt und " + value.username + " beginnt");
     $("#ready").addClass("d-none");
     $("#dice").removeClass("d-none");
+
+    if(username === value.username)
+        $('#dice').prop('disabled', false);
+    else
+        $('#dice').prop('disabled', true);
+}
+
+function onUpdatePlayers(value) {
+    initializePlayers(value.players);
 }
 
 function onBoardTurn(value) {

@@ -114,6 +114,7 @@ class MessageHandler
 
         $this->server->sendTextToAllClients($this->SERVER_NAME, sprintf($this->LOGIN_MESSAGE, $login->getUsername()));
 
+        // Login response to new player
         $message = array('type' => 'login',
             'value' => array(
                 'successful' => true,
@@ -123,6 +124,13 @@ class MessageHandler
                 'players' => $this->gameManager->getPlayersData()
             ));
         $this->server->sendMessage($client->getSocket(), $message);
+
+        // Update players to all clients
+        $message = array('type' => 'updatePlayers',
+            'value' => array(
+                "players" => $this->gameManager->getPlayersData(),
+            ));
+        $this->server->sendMessageToAllClients($message);
     }
 
     public function ready($client, $value)
@@ -145,11 +153,7 @@ class MessageHandler
         }
 
         if($everyoneReady) {
-            $message = array('type' => 'startGame',
-                'value' => array(
-                    'start' => true
-                ));
-            $this->server->sendMessageToAllClients($message);
+            $this->gameManager->startGame();
         }
     }
 
@@ -194,5 +198,10 @@ class MessageHandler
             unset($players[$indexToDelete]);
             $this->gameManager->setPlayers($players);
         }
+    }
+
+    public function getGameManager()
+    {
+        return $this->gameManager;
     }
 }

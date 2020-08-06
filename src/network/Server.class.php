@@ -177,6 +177,11 @@ class Server
         socket_close($client->getSocket());
         unset($this->clients[$index]);
         $this->clients = array_values($this->clients);
+
+        // End game if all players left
+        if(count($this->clients) == 0) {
+            $this->messageHandler->getGameManager()->stopGame();
+        }
     }
 
     public function getClients()

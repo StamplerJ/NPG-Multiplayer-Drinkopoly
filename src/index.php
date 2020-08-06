@@ -53,11 +53,11 @@
 
 <div id="game" class="d-none mx-5">
     <div class="row">
-        <div id="board" class="col-8 text-center">
+        <div id="board" class="col-lg-8 col-12 text-center">
             <canvas id="canvas" class="mx-auto" width="800" height="800">
             </canvas>
         </div>
-        <div id="side" class="col">
+        <div id="side" class="col-lg-4 col-12">
             <div class="popup">
                 <span class="popuptext" id="myPopup"></span>
             </div>
@@ -68,7 +68,7 @@
             </div>
             <div id="playerlistContainer" class="border rounded">
                 <h4>Spielerliste:</h4>
-                <ul id="playerlist">
+                <ul id="playerlist" style="font-size: 16pt">
                 </ul>
             </div>
             <div id="chat" class="border rounded flex-grow-1">

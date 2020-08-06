@@ -32,6 +32,7 @@ function drawPlayers(fields) {
 function addToPlayerList(player) {
     let ul = document.getElementById("playerlist");
     let li = document.createElement("li");
+    li.style.color = player.color;
     li.appendChild(document.createTextNode(player.name));
     ul.appendChild(li);
 }

@@ -65,11 +65,24 @@ class GameManager
             case Games::SHOT:
                 $this->sendShot($client);
                 break;
+            case Games::ROCKPAPERSCISSORS:
+                $this->startRockPaperScissors($client);
+                break;
             case Games::CATEGORY:
 
                 break;
             default:
         }
+    }
+
+    public function startRockPaperScissors($client) {
+        $message = array('type' => Games::ROCKPAPERSCISSORS,
+            'value' => array(
+                "message" => "Wir spielen Schere, Stein, Papier!",
+                "playerOne" => $client->getUsername(),
+                "playerTwo" => $this->getRandomPlayer($client->getUsername())
+        ));
+        $this->server->sendMessage($client->getSocket(), $message);
     }
 
     public function sendDrink($client) {
@@ -92,6 +105,17 @@ class GameManager
 
     public function startGame() {
         $this->gameStarted = true;
+
+        $message = array('type' => 'startGame',
+            'value' => array(
+                'start' => true,
+                'username' => $this->players[$this->currentPlayerIndex]->getName()
+            ));
+        $this->server->sendMessageToAllClients($message);
+    }
+
+    public function stopGame() {
+        $this->gameStarted = false;
     }
 
     public function createPlayer($username) {
@@ -162,6 +186,15 @@ class GameManager
 
         if($this->players[$this->currentPlayerIndex] !== null)
             return $this->players[$this->currentPlayerIndex]->getName();
+    }
+
+    public function getRandomPlayer($except) {
+        $exclude = array($except);
+        $data = $this->players;
+        $diff = array_diff($data, $exclude);
+        $excluded_data = array_values($diff);
+        $rand = rand(0,count($excluded_data)-1);
+        return $excluded_data[$rand];
     }
 
     public function getFields()
