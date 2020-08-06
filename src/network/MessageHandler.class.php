@@ -38,14 +38,34 @@ class MessageHandler
                 break;
             case "category":
                 echo "category";
-                $this->playCategoryGame($value);
+                $this->server->sendTextToAllClients($client->getUsername(), $value->message);
+                $this->categoryCheck($client, $value);
                 break;
             case "neverever":
                 echo "neverever";
-                $this->playNeverEver($value);
+                //$this->gameManager->playNeverEver($value);
+                $this->server->sendTextToAllClients($client->getUsername(), $value->message);
                 break;
             default:
                 $this->server->sendTextToAllClients($client->getUsername(), $value->message);
+        }
+    }
+
+    public function categoryCheck($client, $value)
+    {
+        if($value->message == "NO")
+        {
+            $this->gameManager->sendShot($client);
+            $this->server->sendTextToAllClients($client->getUsername(), "Category-Game beendet.");
+        }
+
+        else
+        {
+            $message = array('type' => 'category',
+                'value' => array(
+                    "nextPlayer" => $this->gameManager->getNextPlayer()
+                ));
+            $this->server->sendMessageToAllClients($message);
         }
     }
 

@@ -94,9 +94,9 @@
             </div>
             <input id="message" type="text" width="100%"/>
             <input id="sendMessage" type="button" value="Send"/>
+            <input id="sendAnswer" type="button" value="Answer" class="d-none"/>
             <input id="ready" type="button" value="Ready"/>
             <input id="dice" type="button" value="Würfeln" class="d-none"/>
-            <input id="sendAnswer" type="button" value="Answer" class="d-none"/>
             <input id="voteYes" type="button" value=" + " class="d-none"/>
             <input id="voteNo" type="button" value=" - " class="d-none"/>
         </div>

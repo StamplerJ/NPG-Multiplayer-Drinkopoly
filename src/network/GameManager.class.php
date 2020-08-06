@@ -70,10 +70,10 @@ class GameManager
                 $this->startRockPaperScissors($client);
                 break;
             case Games::CATEGORY:
-                $this->playCategoryGame($client->getUsername());
+                $this->playCategoryGame($client);
                 break;
             case Games::NEVEREVER:
-                $this->playNeverEver($client->getUsername());
+                $this->playNeverEver($client);
                 break;
             default:
         }
@@ -128,8 +128,8 @@ class GameManager
             'value' => array(
                 "username" => $username,
                 "category" => $this->getCategoryData(),
-                "isGameMaster" => $this->selectGameMaster()
-                //TODO nachricht an spieler
+                "isGameMaster" => $username,
+                "nextPlayer" => $this->getNextPlayer()
             ));
         $this->server->sendMessageToAllClients($message);
     }
@@ -171,12 +171,8 @@ class GameManager
     }
 
     public function getCategoryData() {
-        $data = array();
-
-        foreach ($this->categories as $category)
-            $data[] = $category->getData();
-
-        return $data;
+        $random_key = array_rand($this->categories, 1);
+        return $this->categories[$random_key[0]];
     }
 
     public function selectGameMaster() {
@@ -224,7 +220,7 @@ class GameManager
                 return $obj_a->getName() === $obj_b->getName();
             }
         );
-        
+
         $excluded_data = array_values($diff);
         $rand = rand(0,count($excluded_data)-1);
         return $excluded_data[$rand];

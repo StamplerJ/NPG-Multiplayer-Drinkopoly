@@ -2,6 +2,8 @@ const wsUri = "ws://ux-113.pb.bib.de:22408";
 let websocket;
 let username;
 
+let canChat;
+
 $(document).ready(function () {
     $("#sendMessage").click(function () {
         let message = $("#message").val();
