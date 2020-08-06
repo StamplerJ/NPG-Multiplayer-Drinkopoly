@@ -1,16 +1,24 @@
 $(document).ready(function () {
-    // $("#voteYes").removeClass("d-none");
-    // $("#voteNo").removeClass("d-none");
-    //
-    // $("#voteYes").click(function () {
-    //     sendNeverEverAnswer("YES");
-    //     $("#voteYes").addClass("d-none");
-    //     $("#voteNo").addClass("d-none");
-    // });
-    //
-    // $("#voteNo").click(function () {
-    //     sendNeverEverAnswer("NO");
-    //     $("#voteYes").addClass("d-none");
-    //     $("#voteNo").addClass("d-none");
-    // });
+
 });
+
+function neverEverButtons() {
+    toggleButton("#voteYes", true);
+    toggleButton("#voteNo", true);
+
+    $("#voteYes").click(function () {
+        sendNeverEverAnswer("YES");
+        toggleButton("#voteYes", false);
+        toggleButton("#voteNo", false);
+        toggleButton("#dice", true);
+        toggleButton("#sendMessage", true);
+    });
+
+    $("#voteNo").click(function () {
+        sendNeverEverAnswer("NO");
+        toggleButton("#voteYes", false);
+        toggleButton("#voteNo", false);
+        toggleButton("#dice", true);
+        toggleButton("#sendMessage", true);
+    });
+}

@@ -106,7 +106,7 @@ function onCategory(value) {
     console.log(value);
     if(value.username != null)
     {
-        displayText(username + " hat das Category-Game gestartet!");
+        displayText(value.username + " hat das Category-Game gestartet!");
         displayText("Nenne Begriffe zur Kategorie: " + value.category);
 
         toggleButton("#dice", false);
@@ -115,6 +115,7 @@ function onCategory(value) {
 
         if(value.isGameMaster == username)
         {
+            displayText(value.username + " ist der GameMaster und bewertet die Antworten.")
             gameMaster();
         }
     }
@@ -125,6 +126,10 @@ function onCategory(value) {
 
 function onNeverEver(value) {
     displayText(value.username + " hat 'Never have I ever' gestartet!");
+    displayText(value.question);
+    toggleButton("#dice", false);
+    toggleButton("#sendMessage", false);
+    neverEverButtons();
 }
 
 function onRockPaperScissors(value) {

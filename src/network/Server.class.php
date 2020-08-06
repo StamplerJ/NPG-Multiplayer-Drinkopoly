@@ -7,7 +7,7 @@ require_once("UserSocket.class.php");
 class Server
 {
     private $HOST = "172.18.1.113";
-    private $PORT = 22408;
+    private $PORT = 22407;
     private $NULL = null;
 
     private $SERVER_USERNAME = 'Server';

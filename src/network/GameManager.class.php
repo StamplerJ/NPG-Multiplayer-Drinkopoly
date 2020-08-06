@@ -28,9 +28,9 @@ class GameManager
         $this->fields[] = new BoardField(2, "Tic Tac Toe", Games::TICTACTOE);
         $this->fields[] = new BoardField(3, "Drink", Games::DRINK);
         $this->fields[] = new BoardField(4, "Shot", Games::SHOT);
-        $this->fields[] = new BoardField(5, "Rock Paper Scissors", Games::CATEGORY);
-        $this->fields[] = new BoardField(6, "Rock Paper Scissors", Games::CATEGORY);
-        $this->fields[] = new BoardField(7, "Rock Paper Scissors", Games::CATEGORY);
+        $this->fields[] = new BoardField(5, "Rock Paper Scissors", Games::NEVEREVER);
+        $this->fields[] = new BoardField(6, "Rock Paper Scissors", Games::NEVEREVER);
+        $this->fields[] = new BoardField(7, "Rock Paper Scissors", Games::NEVEREVER);
         $this->fields[] = new BoardField(8, "Shot", Games::SHOT);
         $this->fields[] = new BoardField(9, "Pong", Games::PONG);
         $this->fields[] = new BoardField(11, "Drink", Games::DRINK);
@@ -135,10 +135,10 @@ class GameManager
         $this->server->sendMessageToAllClients($message);
     }
 
-    public function playNeverEver($username) {
+    public function playNeverEver($client) {
         $message = array('type' => 'neverever',
             'value' => array(
-                "username" => $username,
+                "username" => $client->getUsername(),
                 "question" => $this->getNeverEverData()
             ));
         $this->server->sendMessageToAllClients($message);
@@ -172,22 +172,11 @@ class GameManager
     }
 
     public function getCategoryData() {
-        $random_key = array_rand($this->categories, 1);
-        return $this->categories[$random_key];
-    }
-
-    public function selectGameMaster() {
-        $random_key = array_rand($this->players, 1);
-        return $this->players[$random_key[0]];
+        return $this->categories[array_rand($this->categories, 1)];
     }
 
     public function getNeverEverData() {
-        $data = array();
-
-        foreach ($this->neverEverQuestions as $neverEver)
-            $data[] = $neverEver;
-
-        return $data;
+        return $this->neverEverQuestions[array_rand($this->neverEverQuestions, 1)];
     }
 
     public function findField($fieldIndex) {

@@ -28,9 +28,10 @@ function gameMaster() {
 
     $("#voteNo").click(function () {
         sendCategoryAnswer("NO", "rating");
-        $("#voteYes").addClass("d-none");
-        $("#voteNo").addClass("d-none");
-        $("#sendMessage").removeClass("d-none");
-        $("#sendAnswer").addClass("d-none");
+        toggleButton("#voteYes", false);
+        toggleButton("#voteNo", false);
+        toggleButton("#sendMessage", true);
+        toggleButton("#sendAnswer", false);
+        toggleButton("#dice", true);
     });
 }

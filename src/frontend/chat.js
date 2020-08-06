@@ -1,4 +1,4 @@
-const wsUri = "ws://ux-113.pb.bib.de:22408";
+const wsUri = "ws://ux-113.pb.bib.de:22407";
 let websocket;
 let username;
 
