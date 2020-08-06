@@ -38,14 +38,34 @@ class MessageHandler
                 break;
             case "category":
                 echo "category";
-                $this->playCategoryGame($value);
+                $this->server->sendTextToAllClients($client->getUsername(), $value->message);
+                $this->categoryCheck($client, $value);
                 break;
             case "neverever":
                 echo "neverever";
-                $this->playNeverEver($value);
+                //$this->gameManager->playNeverEver($value);
+                $this->server->sendTextToAllClients($client->getUsername(), $value->message);
                 break;
             default:
                 $this->server->sendTextToAllClients($client->getUsername(), $value->message);
+        }
+    }
+
+    public function categoryCheck($client, $value)
+    {
+        if($value->message == "NO")
+        {
+            $this->gameManager->sendShot($client);
+            $this->server->sendTextToAllClients($client->getUsername(), "Category-Game beendet.");
+        }
+
+        else
+        {
+            $message = array('type' => 'category',
+                'value' => array(
+                    "nextPlayer" => $this->gameManager->getNextPlayer()
+                ));
+            $this->server->sendMessageToAllClients($message);
         }
     }
 
@@ -151,32 +171,6 @@ class MessageHandler
                 ));
             $this->server->sendMessageToAllClients($message);
         }
-    }
-
-    public function playCategoryGame($value) {
-        $categoryGame = new Category($value);
-
-        $message = array('type' => 'category',
-            'value' => array(
-                "username" => $categoryGame->getUsername(),
-                "amount" => $categoryGame->getAmount(),
-                "category" => $this->gameManager->getCategoryData(),
-                "isGameMaster" => $this->gameManager->selectGameMaster(),
-                "message" => $categoryGame->getMessage()
-            ));
-        $this->server->sendMessageToAllClients($message);
-    }
-
-    public function playNeverEver($value) {
-        $neverEver = new NeverEver($value);
-
-        $message = array('type' => 'neverever',
-            'value' => array(
-                "username" => $neverEver->getUsername(),
-                "answer" => $neverEver->getAnswer(),
-                "question" => $this->gameManager->getNeverEverData()
-            ));
-        $this->server->sendMessageToAllClients($message);
     }
 
     public function removePlayer($username) {

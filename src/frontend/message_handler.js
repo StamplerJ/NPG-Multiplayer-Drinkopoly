@@ -19,6 +19,9 @@ function handleMessage(message) {
         case "category":
             onCategory(value);
             break;
+        case "neverever":
+            onNeverEver(value);
+            break;
         case "drink":
             onDrink(value);
             break;
@@ -84,8 +87,25 @@ function onShot(value) {
 }
 
 function onCategory(value) {
-    //TODO gamemaster (- Button, bei klick drink +1)
-    displayAnswer(value);
-    distributeCategory(value.category);
 
+    if(username !== null)
+    {
+        displayText(value.username + " hat das Category-Game gestartet!");
+        displayText("Nenne Begriffe zur Kategorie: " + value.category);
+        displayAnswer(value.message);
+        //distributeCategory(value.category);
+        $("#sendMessage").addClass("d-none");
+        $("#sendAnswer").removeClass("d-none");
+
+        if(value.isGameMaster == username)
+        {
+            gameManager();
+        }
+    }
+
+    canChat = value.nextPlayer === username;
+}
+
+function onNeverEver(value) {
+    displayText(value.username + " hat 'Never have I ever' gestartet!");
 }

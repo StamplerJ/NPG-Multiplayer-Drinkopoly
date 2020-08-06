@@ -66,10 +66,10 @@ class GameManager
                 $this->sendShot($client);
                 break;
             case Games::CATEGORY:
-                $this->playCategoryGame($username);
+                $this->playCategoryGame($client);
                 break;
             case Games::NEVEREVER:
-                $this->playNeverEver($username);
+                $this->playNeverEver($client);
                 break;
             default:
         }
@@ -103,8 +103,8 @@ class GameManager
             'value' => array(
                 "username" => $username,
                 "category" => $this->getCategoryData(),
-                "isGameMaster" => $this->selectGameMaster()
-                //TODO nachricht an spieler
+                "isGameMaster" => $username,
+                "nextPlayer" => $this->getNextPlayer()
             ));
         $this->server->sendMessageToAllClients($message);
     }
@@ -146,12 +146,8 @@ class GameManager
     }
 
     public function getCategoryData() {
-        $data = array();
-
-        foreach ($this->categories as $category)
-            $data[] = $category->getData();
-
-        return $data;
+        $random_key = array_rand($this->categories, 1);
+        return $this->categories[$random_key[0]];
     }
 
     public function selectGameMaster() {

@@ -5,9 +5,11 @@ let username;
 $(document).ready(function () {
     $("#sendAnswer").click(function () {
         let message = $("#message").val();
-        if (message.length > 0) {
-            sendCategoryAnswer(message);
-            $("#message").val("");
+        if(canChat){
+            if (message.length > 0) {
+                sendCategoryAnswer(message);
+                $("#message").val("");
+            }
         }
     });
 
@@ -27,6 +29,19 @@ function displayAnswer(input) {
     $("#message_box").append(div);
 }
 
-function distributeCategory(categories) {
-    return categories[Math.floor(Math.random() * categories.length)];
+function gameManager() {
+    $("#voteYes").removeClass("d-none");
+    $("#voteNo").removeClass("d-none");
+
+    $("#voteYes").click(function () {
+        sendCategoryAnswer("YES");
+    });
+
+    $("#voteNo").click(function () {
+        sendCategoryAnswer("NO");
+        $("#voteYes").addClass("d-none");
+        $("#voteNo").addClass("d-none");
+        $("#sendMessage").removeClass("d-none");
+        $("#sendAnswer").addClass("d-none");
+    });
 }
