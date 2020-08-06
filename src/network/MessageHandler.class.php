@@ -157,32 +157,6 @@ class MessageHandler
         }
     }
 
-    public function playCategoryGame($value) {
-        $categoryGame = new Category($value);
-
-        $message = array('type' => 'category',
-            'value' => array(
-                "username" => $categoryGame->getUsername(),
-                "amount" => $categoryGame->getAmount(),
-                "category" => $this->gameManager->getCategoryData(),
-                "isGameMaster" => $this->gameManager->selectGameMaster(),
-                "message" => $categoryGame->getMessage()
-            ));
-        $this->server->sendMessageToAllClients($message);
-    }
-
-    public function playNeverEver($value) {
-        $neverEver = new NeverEver($value);
-
-        $message = array('type' => 'neverever',
-            'value' => array(
-                "username" => $neverEver->getUsername(),
-                "answer" => $neverEver->getAnswer(),
-                "question" => $this->gameManager->getNeverEverData()
-            ));
-        $this->server->sendMessageToAllClients($message);
-    }
-
     public function removePlayer($username) {
         $indexToDelete = null;
 

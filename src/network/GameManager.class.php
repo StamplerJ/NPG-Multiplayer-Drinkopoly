@@ -28,7 +28,9 @@ class GameManager
         $this->fields[] = new BoardField(2, "Tic Tac Toe", Games::TICTACTOE);
         $this->fields[] = new BoardField(3, "Drink", Games::DRINK);
         $this->fields[] = new BoardField(4, "Shot", Games::SHOT);
+        $this->fields[] = new BoardField(5, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
         $this->fields[] = new BoardField(6, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
+        $this->fields[] = new BoardField(7, "Rock Paper Scissors", Games::ROCKPAPERSCISSORS);
         $this->fields[] = new BoardField(8, "Shot", Games::SHOT);
         $this->fields[] = new BoardField(9, "Pong", Games::PONG);
         $this->fields[] = new BoardField(11, "Drink", Games::DRINK);
@@ -54,7 +56,6 @@ class GameManager
         $this->neverEverQuestions[] = "Ich habe noch nie Blut gespendet.";
         $this->neverEverQuestions[] = "Ich habe noch nie den Bruder oder die Schwester eines Freundes begehrt.";
         $this->neverEverQuestions[] = "Ich habe noch nie einen Kontinent-Übergreifenden Krieg mit einer Weltmacht angezettelt.";
-
     }
 
     public function handleGame($game, $client) {
@@ -69,10 +70,10 @@ class GameManager
                 $this->startRockPaperScissors($client);
                 break;
             case Games::CATEGORY:
-                $this->playCategoryGame($username);
+                $this->playCategoryGame($client->getUsername());
                 break;
             case Games::NEVEREVER:
-                $this->playNeverEver($username);
+                $this->playNeverEver($client->getUsername());
                 break;
             default:
         }
@@ -83,9 +84,9 @@ class GameManager
             'value' => array(
                 "message" => "Wir spielen Schere, Stein, Papier!",
                 "playerOne" => $client->getUsername(),
-                "playerTwo" => $this->getRandomPlayer($client->getUsername())
+                "playerTwo" => $this->getRandomPlayer($client->getPlayer())
         ));
-        $this->server->sendMessage($client->getSocket(), $message);
+        $this->server->sendMessageToAllClients($message);
     }
 
     public function sendDrink($client) {
@@ -187,7 +188,7 @@ class GameManager
         $data = array();
 
         foreach ($this->neverEverQuestions as $neverEver)
-            $data[] = $neverEver->getData();
+            $data[] = $neverEver;
 
         return $data;
     }
@@ -212,10 +213,18 @@ class GameManager
             return $this->players[$this->currentPlayerIndex]->getName();
     }
 
-    public function getRandomPlayer($except) {
+    public function getRandomPlayer($except = null) {
+        if(count($this->players) == 1)
+            return $this->players[0];
+
         $exclude = array($except);
         $data = $this->players;
-        $diff = array_diff($data, $exclude);
+        $diff = array_udiff($data, $exclude,
+            function ($obj_a, $obj_b) {
+                return $obj_a->getName() === $obj_b->getName();
+            }
+        );
+        
         $excluded_data = array_values($diff);
         $rand = rand(0,count($excluded_data)-1);
         return $excluded_data[$rand];

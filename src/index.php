@@ -57,6 +57,22 @@
             <canvas id="canvas" class="mx-auto" width="800" height="800">
             </canvas>
         </div>
+        <div id="rockpaperscissors" class="col-lg-8 col-12 text-center d-none">
+            <div id="left" class="">
+                <h2 id="name">Spieler Eins</h2>
+                <h3 id="answer">Warte auf Auswahl...</h3>
+                <input id="leftScissors" type="button" value="Schere"/>
+                <input id="leftRock" type="button" value="Stein"/>
+                <input id="leftPaper" type="button" value="Papier"/>
+            </div>
+            <div id="right" class="">
+                <h2 id="name">Spieler zwei</h2>
+                <h3 id="answer">Warte auf Auswahl...</h3>
+                <input id="rightScissors" type="button" value="Schere"/>
+                <input id="rightRock" type="button" value="Stein"/>
+                <input id="rightPaper" type="button" value="Papier"/>
+            </div>
+        </div>
         <div id="side" class="col-lg-4 col-12">
             <div class="popup">
                 <span class="popuptext" id="myPopup"></span>

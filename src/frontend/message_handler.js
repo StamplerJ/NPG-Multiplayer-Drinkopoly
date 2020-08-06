@@ -29,7 +29,7 @@ function handleMessage(message) {
             onShot(value);
             break;
         case "rockpaperscissors":
-            onUpdatePlayers(value);
+            onRockPaperScissors(value);
             break;
         default:
             onChatMessage(value);
@@ -103,4 +103,21 @@ function onCategory(value) {
     displayAnswer(value);
     distributeCategory(value.category);
 
+}
+
+function onRockPaperScissors(value) {
+    displayMessage(value.message);
+
+    $("#rockpaperscissors").removeClass("d-none");
+    $("#rockpaperscissors #left #name").text(value.playerOne);
+    $("#rockpaperscissors #right #name").text(value.playerTwo);
+
+
+    if(username == value.playerOne) {
+
+    }
+
+    if(username == value.playerTwo) {
+
+    }
 }
