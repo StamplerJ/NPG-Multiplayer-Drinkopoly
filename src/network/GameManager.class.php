@@ -69,7 +69,10 @@ class GameManager
                 $this->startRockPaperScissors($client);
                 break;
             case Games::CATEGORY:
-
+                $this->playCategoryGame($username);
+                break;
+            case Games::NEVEREVER:
+                $this->playNeverEver($username);
                 break;
             default:
         }
@@ -116,6 +119,27 @@ class GameManager
 
     public function stopGame() {
         $this->gameStarted = false;
+    }
+
+
+    public function playCategoryGame($username) {
+        $message = array('type' => 'category',
+            'value' => array(
+                "username" => $username,
+                "category" => $this->getCategoryData(),
+                "isGameMaster" => $this->selectGameMaster()
+                //TODO nachricht an spieler
+            ));
+        $this->server->sendMessageToAllClients($message);
+    }
+
+    public function playNeverEver($username) {
+        $message = array('type' => 'neverever',
+            'value' => array(
+                "username" => $username,
+                "question" => $this->getNeverEverData()
+            ));
+        $this->server->sendMessageToAllClients($message);
     }
 
     public function createPlayer($username) {
