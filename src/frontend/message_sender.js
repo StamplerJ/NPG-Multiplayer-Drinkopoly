@@ -35,12 +35,13 @@ function sendReady() {
     websocket.send(JSON.stringify(obj));
 }
 
-function sendCategoryAnswer(answer) {
+function sendCategoryAnswer(answer, type) {
     let obj = {
         "type": "category",
         value: {
             "username": username,
-            "message": answer
+            "message": answer,
+            "type" : type
         }
     };
 

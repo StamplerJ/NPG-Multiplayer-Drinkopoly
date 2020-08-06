@@ -3,7 +3,7 @@ $(document).ready(function () {
         let message = $("#message").val();
         if(canChat){
             if (message.length > 0) {
-                sendCategoryAnswer(message);
+                sendCategoryAnswer(message, "answer");
                 $("#message").val("");
             }
         }
@@ -23,11 +23,11 @@ function gameMaster() {
     $("#voteNo").removeClass("d-none");
 
     $("#voteYes").click(function () {
-        sendCategoryAnswer("YES");
+        sendCategoryAnswer("YES", "rating");
     });
 
     $("#voteNo").click(function () {
-        sendCategoryAnswer("NO");
+        sendCategoryAnswer("NO", "rating");
         $("#voteYes").addClass("d-none");
         $("#voteNo").addClass("d-none");
         $("#sendMessage").removeClass("d-none");

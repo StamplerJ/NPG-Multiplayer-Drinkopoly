@@ -103,13 +103,13 @@ function onShot(value) {
 }
 
 function onCategory(value) {
-
-    if(username !== null)
+    console.log(value);
+    if(value.username != null)
     {
         displayText(username + " hat das Category-Game gestartet!");
         displayText("Nenne Begriffe zur Kategorie: " + value.category);
-        $("#dice").addClass("d-none");
 
+        toggleButton("#dice", false);
         toggleButton("#sendMessage", false);
         toggleButton("#sendAnswer", true);
 
@@ -120,6 +120,7 @@ function onCategory(value) {
     }
 
     canChat = value.nextPlayer === username;
+    toggleButton("#sendAnswer", canChat);
 }
 
 function onNeverEver(value) {

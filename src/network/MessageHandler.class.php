@@ -37,12 +37,12 @@ class MessageHandler
                 $this->rollDice($client, $value);
                 break;
             case "category":
-                echo "category";
+//                echo "category";
                 $this->server->sendTextToAllClients($client->getUsername(), $value->message);
                 $this->categoryCheck($client, $value);
                 break;
             case "neverever":
-                echo "neverever";
+//                echo "neverever";
                 //$this->gameManager->playNeverEver($value);
                 $this->server->sendTextToAllClients($client->getUsername(), $value->message);
                 break;
@@ -53,19 +53,20 @@ class MessageHandler
 
     public function categoryCheck($client, $value)
     {
-        if($value->message == "NO")
-        {
-            $this->gameManager->sendShot($client);
-            $this->server->sendTextToAllClients($client->getUsername(), "Category-Game beendet.");
-        }
-
-        else
-        {
-            $message = array('type' => 'category',
-                'value' => array(
-                    "nextPlayer" => $this->gameManager->getNextPlayer()
-                ));
-            $this->server->sendMessageToAllClients($message);
+        if($value->type == "rating") {
+            if($value->message == "NO")
+            {
+                $this->gameManager->sendShot($this->server->findClient($this->gameManager->getCurrentPlayer()));
+                $this->server->sendTextToAllClients($client->getUsername(), "Category-Game beendet.");
+            }
+            else
+            {
+                $message = array('type' => 'category',
+                    'value' => array(
+                        "nextPlayer" => $this->gameManager->getNextPlayer()
+                    ));
+                $this->server->sendMessageToAllClients($message);
+            }
         }
     }
 
@@ -84,12 +85,6 @@ class MessageHandler
         }
         $boardTurn->setPlayerPositions($players);
 
-        // Select game of new field
-        $game = $this->gameManager->findField($destinationFieldIndex)->getGame();
-        if($game != null) {
-            $this->gameManager->handleGame($game, $client);
-        }
-
         // Send new field positions to all players
         $message = array('type' => 'board_turn',
             'value' => array(
@@ -99,6 +94,12 @@ class MessageHandler
                 "nextPlayer" => $this->gameManager->getNextPlayer()
             ));
         $this->server->sendMessageToAllClients($message);
+
+        // Select game of new field
+        $game = $this->gameManager->findField($destinationFieldIndex)->getGame();
+        if($game != null) {
+            $this->gameManager->handleGame($game, $client);
+        }
     }
 
     public function login($client, $value)
