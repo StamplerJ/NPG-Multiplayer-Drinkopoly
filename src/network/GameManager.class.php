@@ -151,10 +151,10 @@ class GameManager
         $this->server->sendMessageToAllClients($message);
     }
 
-    public function playNeverEver($username) {
+    public function playNeverEver($client) {
         $message = array('type' => 'neverever',
             'value' => array(
-                "username" => $username,
+                "username" => $client->getUsername(),
                 "question" => $this->getNeverEverData()
             ));
         $this->server->sendMessageToAllClients($message);
@@ -188,22 +188,11 @@ class GameManager
     }
 
     public function getCategoryData() {
-        $random_key = array_rand($this->categories, 1);
-        return $this->categories[$random_key];
-    }
-
-    public function selectGameMaster() {
-        $random_key = array_rand($this->players, 1);
-        return $this->players[$random_key[0]];
+        return $this->categories[array_rand($this->categories, 1)];
     }
 
     public function getNeverEverData() {
-        $data = array();
-
-        foreach ($this->neverEverQuestions as $neverEver)
-            $data[] = $neverEver;
-
-        return $data;
+        return $this->neverEverQuestions[array_rand($this->neverEverQuestions, 1)];
     }
 
     public function findField($fieldIndex) {

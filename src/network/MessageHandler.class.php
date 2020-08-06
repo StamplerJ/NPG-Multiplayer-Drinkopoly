@@ -41,11 +41,8 @@ class MessageHandler
                 $this->categoryCheck($client, $value);
                 break;
             case "neverever":
-                //$this->gameManager->playNeverEver($value);
-                $this->server->sendTextToAllClients($client->getUsername(), $value->message);
-                break;
-            case Games::ROCKPAPERSCISSORS:
-                $this->checkRockPaperScissors($client, $value);
+                $this->server->sendTextToAllClients($client->getUsername(), $value->answer);
+                $this->neverEverCheck($client, $value);
                 break;
             default:
                 $this->server->sendTextToAllClients($client->getUsername(), $value->message);
@@ -113,6 +110,20 @@ class MessageHandler
                     "message" => "RockPaperScissors-Game beendet."
                 ));
             $this->server->sendMessageToAllClients($message);
+        }
+    }
+
+    public function neverEverCheck($client, $value)
+    {
+        if($value->answer == "YES")
+        {
+            $this->server->sendTextToAllClients($client->getUsername(), "" .  $client->getUsername() . " hat 'JA' gewählt!");
+            $this->gameManager->sendDrink($this->server->findClient($client->getUsername()));
+        }
+
+        else
+        {
+            $this->server->sendTextToAllClients($client->getUsername(), "" .  $client->getUsername() . " hat 'NEIN' gewählt!");
         }
     }
 

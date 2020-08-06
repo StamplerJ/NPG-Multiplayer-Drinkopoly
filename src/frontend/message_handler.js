@@ -123,6 +123,7 @@ function onCategory(value) {
 
         if(value.isGameMaster == username)
         {
+            displayText(value.username + " ist der GameMaster und bewertet die Antworten.")
             gameMaster();
         }
     }
@@ -133,6 +134,10 @@ function onCategory(value) {
 
 function onNeverEver(value) {
     displayText(value.username + " hat 'Never have I ever' gestartet!");
+    displayText(value.question);
+    toggleButton("#dice", false);
+    toggleButton("#sendMessage", false);
+    neverEverButtons();
 }
 
 function onRockPaperScissors(value) {
