@@ -41,7 +41,6 @@ class MessageHandler
                 $this->categoryCheck($client, $value);
                 break;
             case "neverever":
-                $this->server->sendTextToAllClients($client->getUsername(), $value->answer);
                 $this->neverEverCheck($client, $value);
                 break;
             case Games::ROCKPAPERSCISSORS:
@@ -117,12 +116,12 @@ class MessageHandler
     {
         if($value->answer == "YES")
         {
-            $this->server->sendTextToAllClients($client->getUsername(), "" .  $client->getUsername() . " hat 'JA' gewählt!");
+            $this->server->sendTextToAllClients($client->getUsername(), " hat 'JA' gewählt!");
             $this->gameManager->sendDrink($this->server->findClient($client->getUsername()));
         }
         else
         {
-            $this->server->sendTextToAllClients($client->getUsername(), "" .  $client->getUsername() . " hat 'NEIN' gewählt!");
+            $this->server->sendTextToAllClients($client->getUsername(), " hat 'NEIN' gewählt!");
         }
 
         $this->gameManager->addNeverEverAnswer();

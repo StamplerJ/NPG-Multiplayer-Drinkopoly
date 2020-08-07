@@ -22,19 +22,22 @@ $(document).ready(function () {
 });
 
 function displayMessage(input) {
-    const div = $('<div />', {
-        text: input.username + ": " + input.message,
-    });
-    $("#message_box").append(div);
-
-    $('#message_box').scrollTop($('#message_box')[0].scrollHeight);
+    displayText(input.username + ": " + input.message);
 }
 
 function displayText(text) {
     const div = $('<div />', {
-        text: text
+        text: text,
+        css: {
+            "padding-left": "10px",
+            "margin-bottom": "0",
+            "background-color": "white",
+            "transition": "background-color 1s linear"
+        }
     });
     $("#message_box").append(div);
+
+    setTimeout(function(){ $(div).css("background-color", "transparent",); },500);
 
     $('#message_box').scrollTop($('#message_box')[0].scrollHeight);
 }

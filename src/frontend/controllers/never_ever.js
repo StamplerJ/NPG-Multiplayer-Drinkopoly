@@ -3,20 +3,20 @@ $(document).ready(function () {
 });
 
 function neverEverButtons() {
-    toggleButton("#voteYes", true);
-    toggleButton("#voteNo", true);
+    toggleButton("#voteYesNE", true);
+    toggleButton("#voteNoNE", true);
 
-    $("#voteYes").click(function () {
+    $("#voteYesNE").click(function () {
         sendNeverEverAnswer("YES");
-        toggleButton("#voteYes", false);
-        toggleButton("#voteNo", false);
+        toggleButton("#voteYesNE", false);
+        toggleButton("#voteNoNE", false);
         toggleButton("#sendMessage", true);
     });
 
-    $("#voteNo").click(function () {
+    $("#voteNoNE").click(function () {
         sendNeverEverAnswer("NO");
-        toggleButton("#voteYes", false);
-        toggleButton("#voteNo", false);
+        toggleButton("#voteYesNE", false);
+        toggleButton("#voteNoNE", false);
         toggleButton("#sendMessage", true);
     });
 }

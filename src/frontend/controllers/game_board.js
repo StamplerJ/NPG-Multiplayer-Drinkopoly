@@ -36,6 +36,8 @@ function boardTurn(value) {
 
 function drawBoard() {
     clearCanvas();
+    let img = document.getElementById("scream");
+    context.drawImage(img, canvasWidth / 2 - img.naturalWidth / 2, canvasHeight / 2 - img.naturalHeight / 2);
     for (let i = 0; i < fields.length; i++) {
         fields[i].draw(context);
     }

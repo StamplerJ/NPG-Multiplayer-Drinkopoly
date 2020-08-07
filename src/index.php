@@ -108,11 +108,15 @@
             <input id="dice" type="button" value="Würfeln" class="d-none"/>
             <input id="voteYes" type="button" value=" + " class="d-none"/>
             <input id="voteNo" type="button" value=" - " class="d-none"/>
+            <input id="voteYesNE" type="button" value=" + " class="d-none"/>
+            <input id="voteNoNE" type="button" value=" - " class="d-none"/>
         </div>
     </div>
 </div>
 
 <div id="snackbar">Some text some message..</div>
+
+<img id="scream" class="d-none" src="https://officialpsds.com/imageview/r5/2w/r52wz0_large.png?1524811885" alt="The Scream">
 
 <script type="text/javascript">
     $(document).ready(function () {

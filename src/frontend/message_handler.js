@@ -62,7 +62,6 @@ function onReady(value) {
 }
 
 function onStartGame(value) {
-
     if(value.message != null) {
         displayText(value.message);
     }
@@ -113,7 +112,7 @@ function onShot(value) {
 function onCategory(value) {
     if(value.username != null)
     {
-        displayText(value.username + " hat das Category-Game gestartet!");
+        showSnackbar(value.username + " hat das Category-Game gestartet!");
         displayText("Nenne Begriffe zur Kategorie: " + value.category);
 
         toggleButton("#dice", false);
@@ -132,7 +131,7 @@ function onCategory(value) {
 }
 
 function onNeverEver(value) {
-    displayText(value.username + " hat 'Never have I ever' gestartet!");
+    showSnackbar(value.username + " hat 'Never have I ever' gestartet!");
     displayText(value.question);
     toggleButton("#dice", false);
     toggleButton("#sendMessage", false);
@@ -140,7 +139,7 @@ function onNeverEver(value) {
 }
 
 function onRockPaperScissors(value) {
-    displayText(value.message);
+    showSnackbar(value.message);
 
     toggleButton("#dice", false);
 
