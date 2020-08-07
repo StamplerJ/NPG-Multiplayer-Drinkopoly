@@ -1,10 +1,10 @@
 <?php
 
 require_once("Server.class.php");
-require_once(__DIR__."/../model/BoardField.class.php");
-require_once(__DIR__."/../model/Player.class.php");
-require_once(__DIR__."/../model/RockPaperScissors.class.php");
-require_once(__DIR__."/../model/enums/Games.class.php");
+require_once(__DIR__ . "/../network/model/BoardField.class.php");
+require_once(__DIR__ . "/../network/model/Player.class.php");
+require_once(__DIR__ . "/../network/model/RockPaperScissors.class.php");
+require_once(__DIR__ . "/../network/model/enums/Games.class.php");
 
 class GameManager
 {

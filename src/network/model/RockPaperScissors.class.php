@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../model/TwoPlayerGame.php");
+require_once(__DIR__ . "/../model/TwoPlayerGame.php");
 
 class RockPaperScissors extends TwoPlayerGame
 {

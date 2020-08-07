@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../model/Player.class.php");
+require_once(__DIR__ . "/../model/Player.class.php");
 
 class BoardField
 {

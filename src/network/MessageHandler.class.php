@@ -1,8 +1,8 @@
 <?php
 
 require_once("Server.class.php");
-require_once(__DIR__."/../model/Login.class.php");
-require_once(__DIR__."/../model/BoardTurn.class.php");
+require_once(__DIR__ . "/../network/model/Login.class.php");
+require_once(__DIR__ . "/../network/model/BoardTurn.class.php");
 require_once(__DIR__."/../network/GameManager.class.php");
 
 class MessageHandler

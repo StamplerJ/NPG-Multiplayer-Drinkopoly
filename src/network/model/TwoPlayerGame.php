@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../model/Game.class.php");
+require_once(__DIR__ . "/../model/Game.class.php");
 
 class TwoPlayerGame extends Game
 {
