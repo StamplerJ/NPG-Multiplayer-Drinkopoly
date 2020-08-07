@@ -111,7 +111,6 @@ function onShot(value) {
 }
 
 function onCategory(value) {
-    console.log(value);
     if(value.username != null)
     {
         displayText(value.username + " hat das Category-Game gestartet!");

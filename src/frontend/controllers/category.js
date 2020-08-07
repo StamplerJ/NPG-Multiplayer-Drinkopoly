@@ -18,9 +18,8 @@ $(document).ready(function () {
 });
 
 function gameMaster() {
-    console.log("gameMaster setup");
-    $("#voteYes").removeClass("d-none");
-    $("#voteNo").removeClass("d-none");
+    toggleButton("#voteYes", true);
+    toggleButton("#voteNo", true);
 
     $("#voteYes").click(function () {
         sendCategoryAnswer("YES", "rating");

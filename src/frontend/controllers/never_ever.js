@@ -3,7 +3,6 @@ $(document).ready(function () {
 });
 
 function neverEverButtons() {
-    console.log("BUttons an");
     toggleButton("#voteYes", true);
     toggleButton("#voteNo", true);
 
@@ -11,7 +10,6 @@ function neverEverButtons() {
         sendNeverEverAnswer("YES");
         toggleButton("#voteYes", false);
         toggleButton("#voteNo", false);
-        toggleButton("#dice", true);
         toggleButton("#sendMessage", true);
     });
 
@@ -19,7 +17,6 @@ function neverEverButtons() {
         sendNeverEverAnswer("NO");
         toggleButton("#voteYes", false);
         toggleButton("#voteNo", false);
-        toggleButton("#dice", true);
         toggleButton("#sendMessage", true);
     });
 }

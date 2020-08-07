@@ -120,10 +120,19 @@ class MessageHandler
             $this->server->sendTextToAllClients($client->getUsername(), "" .  $client->getUsername() . " hat 'JA' gewählt!");
             $this->gameManager->sendDrink($this->server->findClient($client->getUsername()));
         }
-
         else
         {
             $this->server->sendTextToAllClients($client->getUsername(), "" .  $client->getUsername() . " hat 'NEIN' gewählt!");
+        }
+
+        $this->gameManager->addNeverEverAnswer();
+        if($this->gameManager->isNeverEverFinished()) {
+            $message = array('type' => 'startGame',
+                'value' => array(
+                    'username' => $this->gameManager->getCurrentPlayer(),
+                    "message" => "NeverEver-Game beendet."
+                ));
+            $this->server->sendMessageToAllClients($message);
         }
     }
 

@@ -21,6 +21,7 @@ class GameManager
     private $gameStarted;
 
     private $rockPaperScissors;
+    private $neverEverAnswerCounter;
 
     public function __construct($server)
     {
@@ -256,6 +257,18 @@ class GameManager
             return $excluded_data[0];
 
         return $excluded_data[$rand];
+    }
+
+    public function addNeverEverAnswer() {
+        $this->neverEverAnswerCounter++;
+    }
+
+    public function isNeverEverFinished() {
+        if($this->neverEverAnswerCounter >= count($this->players)) {
+            $this->neverEverAnswerCounter = 0;
+            return true;
+        }
+        return false;
     }
 
     public function getFields()
